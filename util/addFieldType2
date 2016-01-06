@@ -1,0 +1,8 @@
+curl -X POST -H 'Content-type:application/json' --data-binary '{
+"add-field-type" : {
+"name":"colors",
+"class":"solr.TextField",
+"analyzer" : {
+"tokenizer":{
+"class":"solr.WhitespaceTokenizerFactory" } }}
+}' http://localhost:8983/solr/colors/schema

@@ -1,0 +1,8 @@
+{
+"add-field-type" : {
+"name":"colors",
+"class":"solr.TextField",
+"analyzer" : {
+"tokenizer":{
+"class":"solr.WhitespaceTokenizerFactory" } }}
+}

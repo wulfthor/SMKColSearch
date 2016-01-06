@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='stylesheets/bootstrap.min.css' />
+    <link rel='stylesheet' href='stylesheets/lightbox.css' />
+    <link rel='stylesheet' href='stylesheets/smk_modif.css' />
+
+</head>
+<body>
+<header>
+    <div class="jumbotron">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12 col-sm-8">
+                    <h1>SMK colorsearch</h1>
+                    <p style="padding:40px;"></p>
+                    <p></p>
+                </div>
+                <div class="col-xs-12 col-sm-4">
+                </div>
+            </div>
+            <div class="row">
+            </div>
+        </div>
+    </div>
+</header>
+<div class="container">
+    <div class="row">
+        <canvas width="300" height="240" id="canvas_picker"></canvas>
+        <div id="hex">HEX: <input type="text"></input></div>
+        <div id="rgb">RGB: <input type="text"></input></div>
+    </div>
+
+    <div id="newstuff" class="row">
+        <div class="gallery" id="gallery-container">
+            <% for(var i=0; i<galleries.length; i++) {%>
+            <div class="col-thumbnail col-lg-3 col-md-4 col-sm-6">
+                <a href="<%= galleries[i].hiname %>" class="thumbnail" data-lightbox="gallery" data-title="<%= galleries[i].description %>">
+                    <img src="<%= galleries[i].name %>" alt="<%= galleries[i].description %>" title="<%= galleries[i].description %>">
+                </a>
+            </div>
+            <% } %>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="javascripts/jquery-min.js"></script>
+<script type="text/javascript" src="javascripts/bootstrap.min.js"></script>
+<script type="text/javascript" src="javascripts/lightbox.js"></script>
+<script type="text/javascript">
+    var canvas = document.getElementById('canvas_picker').getContext('2d');
+
+    // create an image object and get it’s source
+    var img = new Image();
+    img.src = 'images/colormap.jpg';
+
+    // copy the image to the canvas
+    $(img).load(function(){
+        canvas.drawImage(img,0,0);
+    });
+
+    // http://www.javascripter.net/faq/rgbtohex.htm
+    function rgbToHex(R,G,B) {return toHex(R)+toHex(G)+toHex(B)}
+    function toHex(n) {
+        n = parseInt(n,10);
+        if (isNaN(n)) return "00";
+        n = Math.max(0,Math.min(n,255));
+        return "0123456789ABCDEF".charAt((n-n%16)/16)  + "0123456789ABCDEF".charAt(n%16);
+    }
+    $('#canvas_picker').click(function(event){
+        // getting user coordinates
+        var x = event.pageX - this.offsetLeft;
+        var y = event.pageY - this.offsetTop;
+        // getting image data and RGB values
+        var img_data = canvas.getImageData(x, y, 1, 1).data;
+        var R = img_data[0];
+        var G = img_data[1];
+        var B = img_data[2];  var rgb = R + ',' + G + ',' + B;
+        // convert RGB to HEX
+        var hex = rgbToHex(R,G,B);
+        // making the color the value of the input
+        $('#rgb input').val(rgb);
+        $('#hex input').val('#' + hex);
+    });
+</script>
+
+</body>
+</html>
+

@@ -1,0 +1,5 @@
+#!/bin/bash
+
+curl -s http://172.20.1.61:8983/solr/colors/select?q=d4c1b3\&fl=id,termfreq("color_text","d4c1b3")
+#curl -s http://172.20.1.61:8983/solr/colors/select?q=d4c1b3\&fl=id,termfreq("color_text","d4c1b3")\&wt=csv\&rows=25\&tv=true\&tv.tf=true 
+#?fl=score,documentPageId,termfreq%28contents,amplifiers%29,contents&defType=func&q=tf%28contents,amplifiers%29&f.contents.tv.offsets=true

@@ -1,0 +1,8 @@
+{
+  "add-field" : {
+    "name":"color_text",
+    "type":"colors",
+    "indexed":"true",
+    "stored":true 
+  }
+}
