@@ -20,27 +20,58 @@ router.get('/', function(req,res) {
     if (typeof req.query['color'] !== 'undefined') {
 
         request({
-            url: 'http://modulus.io', //URL to hit
-            qs: {from: 'blog example', time: +new Date()}, //Query string data
+            uri: 'http://172.20.1.61:8983/solr/colors/' + 'select?q=' + querystring,
             method: 'GET', //Specify the method
-            headers: { //We can define headers too
-                'Content-Type': 'MyContentType',
-                'Custom-Header': 'Custom Value'
-            }
+
         }, function(error, response, body){
             if(error) {
                 console.log(error);
             } else {
-                console.log(response.statusCode, body);
+                console.log("dzz it");
+                //console.log(response.statusCode, body);
+                var info = JSON.parse(body);
+                console.log(JSON.stringify(info.response.docs));
+
+                var resArr = info.response.docs;
+                //{"id":"KMS8099","termfreq('color_text',e8e5e0)":413}
+                resArr.forEach(function(doc) {
+                    subquerystring = doc.id + "&fl=id,medium_image_url,title_dk,artist_name&wt=json";
+                    console.log(subquerystring);
+
+                    request({
+                        uri: 'http://solr-02.smk.dk:8080/solr/prod_all_dk/' + 'select?q=id:' + subquerystring,
+                        method: 'GET', //Specify the method
+
+                    }, function(error, response, body){
+                        if(error) {
+                            console.log(error);
+                        } else {
+                            console.log("dzz it");
+                            //console.log(response.statusCode, body);
+                            var info = JSON.parse(body);
+                            console.log(JSON.stringify(info.response.docs[0].medium_image_url));
+
+/*
+                            console.log(JSON.stringify(info.response.docs));
+                            var resArr = info.response.docs;
+                            //{"id":"KMS8099","termfreq('color_text',e8e5e0)":413}
+                            resArr.forEach(function(doc) {
+                                console.log(doc.id);
+                            });
+                            */
+
+                        }
+                    });
+
+                });
+
             }
         });
-
-
     }
+
     /*
         var options = {
-            uri: 'http://172.20.1.61:8983/solr/colors/' +
-            'select?q=' +querystring,
+            uri: 'http://172.20.1.61:8983/solr/colors/' + 'select?q=' + querystring,
             method: 'GET'
         }
 
@@ -79,7 +110,7 @@ router.get('/', function(req,res) {
 
     */
 
-    res.send('hello');
+    res.send('hellxo');
 });
 
 module.exports = router;
