@@ -1,0 +1,23 @@
+#!/bin/bash
+#http://solr-02.smk.dk:8080/solr/prod_SAFO/select?q=id:KMS5654&indent=true&wt=json
+
+curl -s http://solr-02.smk.dk:8080/solr/prod_SAFO/select?q=id:kms5764\&fl=id,medium_image_url,title_dk,artist_name,object_production_date_earliest\&wt=json\&indent=true\&rows=1
+curl -s http://solr-02.smk.dk:8080/solr/prod_SAFO/select?q=id:kms6995\&fl=id,medium_image_url,title_dk,artist_name,object_production_date_earliest\&wt=json\&indent=true\&rows=1
+curl -s http://solr-02.smk.dk:8080/solr/prod_SAFO/select?q=id:kms5762\&fl=id,medium_image_url,title_dk,artist_name,object_production_date_earliest\&wt=json\&indent=true\&rows=1
+curl -s http://solr-02.smk.dk:8080/solr/prod_SAFO/select?q=id:KMS7653-3\&fl=id,medium_image_url,title_dk,artist_name,object_production_date_earliest\&wt=json\&indent=true\&rows=1
+curl -s http://solr-02.smk.dk:8080/solr/prod_SAFO/select?q=id:kms8396\&fl=id,medium_image_url,title_dk,artist_name,object_production_date_earliest\&wt=json\&indent=true\&rows=1
+curl -s http://solr-02.smk.dk:8080/solr/prod_SAFO/select?q=id:kms5654\&fl=id,medium_image_url,title_dk,artist_name,object_production_date_earliest\&wt=json\&indent=true\&rows=1
+curl -s http://solr-02.smk.dk:8080/solr/prod_SAFO/select?q=id:KMS7272\&fl=id,medium_image_url,title_dk,artist_name,object_production_date_earliest\&wt=json\&indent=true\&rows=1
+curl -s http://solr-02.smk.dk:8080/solr/prod_SAFO/select?q=id:KMS8477\&fl=id,medium_image_url,title_dk,artist_name,object_production_date_earliest\&wt=json\&indent=true\&rows=1
+curl -s http://solr-02.smk.dk:8080/solr/prod_SAFO/select?q=id:KMS5430\&fl=id,medium_image_url,title_dk,artist_name,object_production_date_earliest\&wt=json\&indent=true\&rows=1
+curl -s http://solr-02.smk.dk:8080/solr/prod_SAFO/select?q=id:kms7056\&fl=id,medium_image_url,title_dk,artist_name,object_production_date_earliest\&wt=json\&indent=true\&rows=1
+curl -s http://solr-02.smk.dk:8080/solr/prod_SAFO/select?q=id:KMS8099\&fl=id,medium_image_url,title_dk,artist_name,object_production_date_earliest\&wt=json\&indent=true\&rows=1
+curl -s http://solr-02.smk.dk:8080/solr/prod_SAFO/select?q=id:KMS8098\&fl=id,medium_image_url,title_dk,artist_name,object_production_date_earliest\&wt=json\&indent=true\&rows=1
+curl -s http://solr-02.smk.dk:8080/solr/prod_SAFO/select?q=id:kms8560\&fl=id,medium_image_url,title_dk,artist_name,object_production_date_earliest\&wt=json\&indent=true\&rows=1
+curl -s http://solr-02.smk.dk:8080/solr/prod_SAFO/select?q=id:KMS8514_5\&fl=id,medium_image_url,title_dk,artist_name,object_production_date_earliest\&wt=json\&indent=true\&rows=1
+curl -s http://solr-02.smk.dk:8080/solr/prod_SAFO/select?q=id:kms8110\&fl=id,medium_image_url,title_dk,artist_name,object_production_date_earliest\&wt=json\&indent=true\&rows=1
+curl -s http://solr-02.smk.dk:8080/solr/prod_SAFO/select?q=id:kms8398\&fl=id,medium_image_url,title_dk,artist_name,object_production_date_earliest\&wt=json\&indent=true\&rows=1
+curl -s http://solr-02.smk.dk:8080/solr/prod_SAFO/select?q=id:KMS5426\&fl=id,medium_image_url,title_dk,artist_name,object_production_date_earliest\&wt=json\&indent=true\&rows=1
+curl -s http://solr-02.smk.dk:8080/solr/prod_SAFO/select?q=id:KMS8590\&fl=id,medium_image_url,title_dk,artist_name,object_production_date_earliest\&wt=json\&indent=true\&rows=1
+curl -s http://solr-02.smk.dk:8080/solr/prod_SAFO/select?q=id:kms5402\&fl=id,medium_image_url,title_dk,artist_name,object_production_date_earliest\&wt=json\&indent=true\&rows=1
+curl -s http://solr-02.smk.dk:8080/solr/prod_SAFO/select?q=id:kms7693-3\&fl=id,medium_image_url,title_dk,artist_name,object_production_date_earliest\&wt=json\&indent=true\&rows=1

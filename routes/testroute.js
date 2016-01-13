@@ -2,115 +2,52 @@ var express = require('express');
 var router = express.Router();
 var http = require('http');
 var request = require('request');
+var Promise = require('bluebird');
+var async = require('async');
+
 
 router.get('/', function(req,res) {
-    console.log('other');
-    console.log(req.query['color']);
-    console.log(req.query['numberofhits']);
-    console.log("ixnto ");
-    var color = req.query['color'];
-    var hits = req.query['hits'];
-    //var querystring = req.query['startdate'] + '%20TO%20' + req.query['enddate'];
-    //var querystring = req.query['startdate'] + '%20TO%20' + req.query['enddate'];
-    // curl -s http://172.20.1.61:8983/solr/$core/
-    // select?q=$color\&fl=id,termfreq\('color_text',$color\)\&wt=csv\&indent=true\&rows=$rows\&sort=score%20desc
 
+    //var color = req.query['color'];
+    //var hits = req.query['hits'];
+    var awArray = new Array();
+    var color = 'e8e5e0';
+    var hits = 20;
 
-    querystring = color + "&fl=id,termfreq('color_text'," + color + ")&wt=json&rows=" + hits;
-    if (typeof req.query['color'] !== 'undefined') {
-
-        request({
-            uri: 'http://172.20.1.61:8983/solr/colors/' + 'select?q=' + querystring,
-            method: 'GET', //Specify the method
-
-        }, function(error, response, body){
-            if(error) {
-                console.log(error);
-            } else {
-                console.log("dzz it");
-                //console.log(response.statusCode, body);
-                var info = JSON.parse(body);
-                console.log(JSON.stringify(info.response.docs));
-
-                var resArr = info.response.docs;
-                //{"id":"KMS8099","termfreq('color_text',e8e5e0)":413}
-                resArr.forEach(function(doc) {
-                    subquerystring = doc.id + "&fl=id,medium_image_url,title_dk,artist_name&wt=json";
-                    console.log(subquerystring);
-
-                    request({
-                        uri: 'http://solr-02.smk.dk:8080/solr/prod_all_dk/' + 'select?q=id:' + subquerystring,
-                        method: 'GET', //Specify the method
-
-                    }, function(error, response, body){
-                        if(error) {
-                            console.log(error);
-                        } else {
-                            console.log("dzz it");
-                            //console.log(response.statusCode, body);
-                            var info = JSON.parse(body);
-                            console.log(JSON.stringify(info.response.docs[0].medium_image_url));
-
-/*
-                            console.log(JSON.stringify(info.response.docs));
-                            var resArr = info.response.docs;
-                            //{"id":"KMS8099","termfreq('color_text',e8e5e0)":413}
-                            resArr.forEach(function(doc) {
-                                console.log(doc.id);
-                            });
-                            */
-
-                        }
-                    });
-
+    async.waterfall([
+            function getKMSfromCol(callback) {
+                var retVal = '';
+                querystring = color + "&fl=id,termfreq('color_text'," + color + ")&wt=json&rows=" + hits;
+                request({
+                    uri: 'http://172.20.1.61:8983/solr/colors/' + 'select?q=' + querystring,
+                    method: 'GET'
+                }, function(error, response, body) {
+                    if (error) {
+                        console.log(error);
+                        callback(error, null);
+                        return;
+                    } else {
+                        var retval = JSON.parse(body);
+                        console.log(response.statusCode, JSON.stringify(retval.response.docs));
+                    }
+                    console.log("out");
+                    callback(null,retval.response.docs);
                 });
 
-            }
-        });
-    }
-
-    /*
-        var options = {
-            uri: 'http://172.20.1.61:8983/solr/colors/' + 'select?q=' + querystring,
-            method: 'GET'
-        }
-
-        console.log("OP" + JSON.stringify(options));
-
-        request(options, function (err, response, data) {
-            console.log("do xxreq");
-            //console.log(data);
-            if (err) {
-                console.log(err);
-            }
-
-
-            //console.log('HEADERS: ' + JSON.stringify(data));
-            var mData = JSON.parse(data.body);
-            console.log("her ..");
-            //console.log(JSON.stringify(mData))
-            console.log("her ..");
-
-            res.send('hejj');
-
-            //res.send('hej');
-
-            //console.log(mData.response.docs[0]);
-            /*
-             res.render('artworks', {
-             titel: 'her er vi',
-             kunstner: mData.response.docs[0].artists_data,
-             awid: mData.response.docs[0].id_s,
-             awurl: mData.response.docs[0].externalurl
-             });
+            }],
+        function (err, result) {
+            console.log("done");
+            //console.log(JSON.stringify(result));
+            result.forEach(function(item) {
+                console.log(JSON.stringify(item));
+            })
 
         });
 
-    }
+    res.send("hall");
 
-    */
 
-    res.send('hellxo');
 });
+
 
 module.exports = router;

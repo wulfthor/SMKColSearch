@@ -1,5 +1,6 @@
 #!/usr/bin/python
 
+import logging
 import sys
 import os.path
 import json
@@ -9,6 +10,8 @@ from PIL import Image
 from pprint import pprint
 
 #KMS4498,http://cspic.smk.dk/globus/40412247/img0083.jpg
+
+logging.basicConfig(filename='logs/thw2.log',level=logging.DEBUG)
 
 f = open( sys.argv[1], 'rU' )
 lines=f.readlines()
@@ -20,6 +23,7 @@ for line in lines:
   testoutname = "/home/thw/git/colorsearch/colsearch/newcolfiles/trash/" + idTag + ".*"
 
   if os.path.exists(testoutname):
+    logging.debug("Continue: " + line)
     continue
 
   url=lineSplit[1]
@@ -28,8 +32,10 @@ for line in lines:
   fileLine = '/mnt/cifs/Globus/' + tmpfileLine.rstrip()
 
   try:
+    logging.debug("OKopen: " + fileLine)
     image = Image.open(fileLine)
   except:
+    logging.debug("Err: " + fileLine)
     continue
 
   w,h=image.size
@@ -37,6 +43,7 @@ for line in lines:
 
 
   if len(colors) > 256:
+    logging.info("C: " + line)
     hist={}
     testdcit = {"hello": "world"}
 
@@ -47,10 +54,13 @@ for line in lines:
     #pprint(hist)
     try:
       with open(outname, 'w') as outfile:
+        logging.debug("OK: " + outname)
         json.dump(hist, outfile, sort_keys=True, indent=4, separators=(',', ': '))
     except:
+      logging.debug("Err: " + outname)
       continue
 
   else:
+    logging.info("B: " + line)
     continue
 

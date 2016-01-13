@@ -1,0 +1,109 @@
+var express = require('express');
+var router = express.Router();
+var http = require('http');
+var request = require('request');
+var Promise = require('bluebird');
+
+
+router.get('/', function(req,res) {
+
+    var color = req.query['color'];
+    var hits = req.query['hits'];
+    var awArray = new Array();
+    //var querystring = req.query['startdate'] + '%20TO%20' + req.query['enddate'];
+    //var querystring = req.query['startdate'] + '%20TO%20' + req.query['enddate'];
+    // curl -s http://172.20.1.61:8983/solr/$core/
+    // select?q=$color\&fl=id,termfreq\('color_text',$color\)\&wt=csv\&indent=true\&rows=$rows\&sort=score%20desc
+
+    var finishRequest = function(resultArr) {
+        res.render('artworks', {
+            titel: 'Artworks based on color ' + color,
+            artworks: resultArr
+        });
+
+    };
+    console.log("runnin");
+
+
+    var q1 = function(fn) {
+        console.log("into ");
+        querystring = color + "&fl=id,termfreq('color_text'," + color + ")&wt=json&rows=" + hits;
+        if (typeof req.query['color'] !== 'undefined') {
+            request({
+                uri: 'http://172.20.1.61:8983/solr/colors/' + 'select?q=' + querystring,
+                method: 'GET', //Specify the method
+
+            }, function(error, response, body) {
+                if (error) {
+                    console.log(error);
+                } else {
+
+                    //console.log(response.statusCode, body);
+                    var info = JSON.parse(body);
+                    var awArray = new Array();
+                    //console.log(JSON.stringify(info));
+                    if (typeof info.response.docs !== 'undefined') {
+                        //console.log(JSON.stringify(info.response.docs));
+                        var resArr = info.response.docs;
+                        console.log("returning");
+                        return resArr;
+                    }
+                }
+            });
+        } else {
+            console.log('Error');
+        }
+        console.log("out");
+    };
+
+    var q2 = function(fn) {
+        console.log("into 2");
+
+        //{"id":"KMS8099","termfreq('color_text',e8e5e0)":413}
+        fn.forEach(function (doc) {
+            // TODO: make the querystring json-opject
+            subquerystring = doc.id + "&fl=id,medium_image_url,title_dk,artist_name,object_production_date_earliest&wt=json";
+            console.log(subquerystring);
+
+            request({
+                uri: 'http://solr-02.smk.dk:8080/solr/prod_all_dk/' + 'select?q=id:' + subquerystring,
+                method: 'GET', //Specify the method
+
+            }, function (error, response, body) {
+                if (error) {
+                    console.log(error);
+                } else {
+
+                    var info = JSON.parse(body);
+                    //console.log(info);
+                    if (typeof info.response.docs[0] !== 'undefined') {
+                        console.log("length:" + info.response.docs.length);
+                        console.log(JSON.stringify(info.response.docs[0]));
+                        awArray.push(info.response.docs[0]);
+
+                    }
+                }
+            });
+
+        });
+        return awArray;
+    };
+
+
+    q1(function (err, color) {
+        console.log("intog q1");
+        if (err) { return; }
+        console.log("tow 2");
+
+        q2(function (err, color) {
+            console.log("into  q2");
+            if (err) { return; }
+            finishRequest(color);
+        });
+    });
+    console.log("doing end");
+
+});
+
+
+module.exports = router;
