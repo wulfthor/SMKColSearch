@@ -5,6 +5,7 @@
     <link rel='stylesheet' href='stylesheets/bootstrap.min.css' />
     <link rel='stylesheet' href='stylesheets/lightbox.css' />
     <link rel='stylesheet' href='stylesheets/smk_modif.css' />
+    <link rel='stylesheet' href='stylesheets/style.css' />
 
 </head>
 <body>
@@ -28,21 +29,34 @@
 <div class="container">
     <div class="row">
         <canvas width="300" height="240" id="canvas_picker"></canvas>
-        <div id="hex">HEX: <input type="text"></input></div>
-        <div id="rgb">RGB: <input type="text"></input></div>
+        <form class="form-horizontal" role="form" action="/testroute" method="post">
+            <div class="form-group">
+                <label for="hex" class="col-sm-1 control-label"></label>
+                <div class="col-xs-7 col-sm-3 col-md-3">
+                    <input type="text" class="form-control" id="hex" name="hex" placeholder="Enter hex value">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="rgb" class="col-sm-1 control-label"></label>
+                <div class="col-xs-5 col-sm-3 col-md-3 col-lg-3">
+                    <input type="text" class="form-control" id="rgb" name="rgb" placeholder="Enter RGB value">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="hits" class="col-sm-1 control-label"></label>
+                <div class="col-xs-5 col-sm-3 col-md-3 col-lg-3">
+                    <input type="number" class="form-control" id="hits" name="hits" placeholder="Number of hits">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-xs-5 col-sm-3 col-md-3 col-lg-3">
+                    <button type="submit" class="btn btn-primary">Find artworks</button>
+                </div>
+            </div>
+        </form>
+
     </div>
 
-    <div id="newstuff" class="row">
-        <div class="gallery" id="gallery-container">
-            <% for(var i=0; i<galleries.length; i++) {%>
-            <div class="col-thumbnail col-lg-3 col-md-4 col-sm-6">
-                <a href="<%= galleries[i].hiname %>" class="thumbnail" data-lightbox="gallery" data-title="<%= galleries[i].description %>">
-                    <img src="<%= galleries[i].name %>" alt="<%= galleries[i].description %>" title="<%= galleries[i].description %>">
-                </a>
-            </div>
-            <% } %>
-        </div>
-    </div>
 </div>
 
 <script type="text/javascript" src="javascripts/jquery-min.js"></script>
@@ -80,8 +94,8 @@
         // convert RGB to HEX
         var hex = rgbToHex(R,G,B);
         // making the color the value of the input
-        $('#rgb input').val(rgb);
-        $('#hex input').val('#' + hex);
+        $('#rgb').val(rgb);
+        $('#hex').val('#' + hex);
     });
 </script>
 

@@ -1,0 +1,118 @@
+                    tawArray =
+                        [
+                            {
+                                "medium_image_url": "http://cspic.smk.dk/globus/GLOBUS%202008/kms5764.jpg",
+                                "title_dk": "Dansende. Kærlighedspar",
+                                "artist_name": "Gerhard Henning" ,
+                                "id": "KMS5764",
+                                "object_production_date_earliest": "1915-01-01T00:00:00Z"
+                            },
+                            {
+                                "medium_image_url": "http://cspic.smk.dk/globus/GLOBUS%202007/kms6995.jpg",
+                                "title_dk": "Ribbeskjold/vippeskjold",
+                                "artist_name":  "Niels Guttormsen" ,
+                                "id": "KMS6995",
+                                "object_production_date_earliest": "1975-01-01T00:00:00Z"
+                            },
+                            {
+                                "medium_image_url": "http://cspic.smk.dk/globus/GLOBUS%202008/kms5762.jpg",
+                                "title_dk": "Zeus og Io. Kærlighedspar",
+                                "artist_name":  "Gerhard Henning" ,
+                                "id": "KMS5762",
+                                "object_production_date_earliest": "1915-01-01T00:00:00Z"
+                            },
+                            {
+                                "medium_image_url": "http://cspic.smk.dk/globus/GLOBUS%202006/kms8396.jpg",
+                                "title_dk": "Pieta II",
+                                "artist_name":  "Bjørn Nørgaard" ,
+                                "id": "KMS8396",
+                                "object_production_date_earliest": "1988-01-01T00:00:00Z"
+                            },
+                            {
+                                "medium_image_url": "http://cspic.smk.dk/globus/GLOBUS%202004/Globus%20oktober%202004/kms5654.jpg",
+                                "id": "KMS5654",
+                                "title_dk": "Fru Sophie Thiele, f. Holten stående med døtrene Ida og Hanne",
+                                "object_production_date_earliest": "1836-01-01T00:00:00Z",
+                                "artist_name":  "H.W. Bissen"
+                            },
+                            {
+                                "medium_image_url": "http://cspic.smk.dk/globus/GLOBUS%202012/kms7272.jpg",
+                                "title_dk": "Lysmasser",
+                                "artist_name":  "Kasper Heiberg" ,
+                                "id": "KMS7272",
+                                "object_production_date_earliest": "1964-01-01T00:00:00Z"
+                            },
+                            {
+                                "medium_image_url": "http://cspic.smk.dk/globus/GLOBUS%202006/KMS8477.jpg",
+                                "title_dk": "Minimumsbetragtning",
+                                "artist_name":  "Susanne Ussing" ,
+                                "id": "KMS8477",
+                                "object_production_date_earliest": "1971-01-01T00:00:00Z"
+                            },
+                            {
+                                "medium_image_url": "http://cspic.smk.dk/globus/GLOBUS%202004/Globus%20april2004/KMS5430.jpg",
+                                "id": "KMS5430",
+                                "title_dk": "Kobberstikkeren Carl Edvard Sonne",
+                                "object_production_date_earliest": "1860-01-01T00:00:00Z",
+                                "artist_name":  "H.W. Bissen"
+                            },
+                            {
+                                "medium_image_url": "http://cspic.smk.dk/globus/GLOBUS%202008/kms7056.jpg",
+                                "title_dk": "Portræthoved",
+                                "artist_name":  "Agnete Madsen" ,
+                                "id": "KMS7056",
+                                "object_production_date_earliest": "1978-01-01T00:00:00Z"
+                            },
+                            {
+                                "medium_image_url": "http://cspic.smk.dk/globus/GLOBUS%202006/KMS8099.jpg",
+                                "id": "KMS8099",
+                                "object_production_date_earliest": "1999-01-01T00:00:00Z",
+                                "artist_name":  "Mads Gamdrup"
+                            },
+                            {
+                                "medium_image_url": "http://cspic.smk.dk/globus/GLOBUS%202006/KMS8098.jpg",
+                                "artist_name":  "Mads Gamdrup" ,
+                                "id": "KMS8098",
+                                "object_production_date_earliest": "1999-01-01T00:00:00Z"
+                            },
+                            {
+                                "id": "KMS8560",
+                                "title_dk": "Tons of Circumstances",
+                                "object_production_date_earliest": "1997-01-01T00:00:00Z",
+                                "artist_name":  "Kirsten Ortwed"
+                            },
+                            {
+                                "medium_image_url": "http://cspic.smk.dk/globus/GLOBUS%202006/kms8110.jpg",
+                                "title_dk": "Sort-hvid-prik",
+                                "artist_name":  "Albert Mertz" ,
+                                "id": "KMS8110",
+                                "object_production_date_earliest": "1968-01-01T00:00:00Z"
+                            },
+                            {
+                                "medium_image_url": "http://cspic.smk.dk/globus/GLOBUS%202006/kms8398.jpg",
+                                "title_dk": "Architectura Humanae",
+                                "artist_name":  "Bjørn Nørgaard" ,
+                                "id": "KMS8398",
+                                "object_production_date_earliest": "1988-01-01T00:00:00Z"
+                            },
+                            {
+                                "medium_image_url": "http://cspic.smk.dk/globus/GLOBUS%202003/Globus%20oktober%202003/KMS5426.jpg",
+                                "title_dk": "Musikken",
+                                "artist_name":  "John Börjeson" ,
+                                "id": "KMS5426",
+                                "object_production_date_earliest": "1850-01-01T00:00:00Z"
+                            },
+                            {
+                                "medium_image_url": "http://cspic.smk.dk/globus/GLOBUS%202009/KMS8590.jpg",
+                                "title_dk": "Wood Nation / Border Station",
+                                "artist_name":  "Leonard Forslund" ,
+                                "id": "KMS8590",
+                                "object_production_date_earliest": "2008-01-01T00:00:00Z"
+                            },
+                            {
+                                "medium_image_url": "http://cspic.smk.dk/globus/GLOBUS%202004/Globus%20oktober%202004/kms5402.jpg",
+                                "title_dk": "En karl, der rider en hest til vands",
+                                "artist_name":  "Georg Christian Freund" ,
+                                "id": "KMS5402",
+                                "object_production_date_earliest": "1853-01-23T00:00:00Z"
+                            }];
