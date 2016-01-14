@@ -15,20 +15,19 @@
             <div class="row">
                 <div class="col-xs-12 col-sm-8">
                     <h1>SMK colorsearch</h1>
-                    <p style="padding:40px;"></p>
+                    <p style="padding:10px;"></p>
                     <p></p>
                 </div>
                 <div class="col-xs-12 col-sm-4">
                 </div>
             </div>
-            <div class="row">
-            </div>
         </div>
-    </div>
 </header>
 <div class="container">
     <div class="row">
         <canvas width="300" height="240" id="canvas_picker"></canvas>
+        <canvas width="100" height="50" id="canvas_picked"></canvas>
+        <canvas width="100" height="50" id="canvas_var"></canvas>
         <form class="form-horizontal" role="form" action="/testroute" method="post">
             <div class="form-group">
                 <label for="hex" class="col-sm-1 control-label"></label>
@@ -45,7 +44,7 @@
             <div class="form-group">
                 <label for="hits" class="col-sm-1 control-label"></label>
                 <div class="col-xs-5 col-sm-3 col-md-3 col-lg-3">
-                    <input type="number" class="form-control" id="hits" name="hits" placeholder="Number of hits">
+                    <input type="number" value="20" class="form-control" id="hits" name="hits" placeholder="Number of hits">
                 </div>
             </div>
             <div class="form-group">
@@ -64,6 +63,8 @@
 <script type="text/javascript" src="javascripts/lightbox.js"></script>
 <script type="text/javascript">
     var canvas = document.getElementById('canvas_picker').getContext('2d');
+    var canvas2 = document.getElementById('canvas_picked').getContext('2d');
+    var canvas3 = document.getElementById('canvas_var').getContext('2d');
 
     // create an image object and get it’s source
     var img = new Image();
@@ -90,12 +91,27 @@
         var img_data = canvas.getImageData(x, y, 1, 1).data;
         var R = img_data[0];
         var G = img_data[1];
-        var B = img_data[2];  var rgb = R + ',' + G + ',' + B;
+        var B = img_data[2];
+        var rgb = R + ',' + G + ',' + B;
         // convert RGB to HEX
         var hex = rgbToHex(R,G,B);
-        // making the color the value of the input
+        // making the color the value of the input'
+        for (var i=0;i<6;i++) {
+            for (var j = 0; j < 6; j++) {
+                canvas3.fillStyle = 'rgb(' + Math.floor(R - 22.5 * i) + ',' +
+                        Math.floor(G - 22.5 * j) + ',' + B + ')';
+                canvas3.fillRect(j * 25, i * 25, 25, 25);
+            }
+        }
+
+        var fillVal = "#" + hex;
+
+        canvas2.fillStyle=fillVal;
+        canvas2.fillRect(20,20,150,100);
+
         $('#rgb').val(rgb);
         $('#hex').val('#' + hex);
+
     });
 </script>
 

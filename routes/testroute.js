@@ -95,7 +95,8 @@ router.post('/', function(req,res) {
 
                 res.render('artworks', {
                     titel: 'her er vi',
-                    artworks: toSendArr
+                    artworks: toSendArr,
+                    bgcol: color
 
                  });
 

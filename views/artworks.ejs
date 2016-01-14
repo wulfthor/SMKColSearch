@@ -4,16 +4,16 @@
     <title><%= titel %></title>
     <link rel='stylesheet' href='stylesheets/bootstrap.min.css' />
     <link rel='stylesheet' href='stylesheets/lightbox.css' />
-    <link rel='stylesheet' href='stylesheets/app-style.css' />
+    <link rel='stylesheet' href='stylesheets/style.css' />
 
 </head>
 <body>
 <header>
-    <div class="jumbotron">
+    <div class="jumbotron" style="background:#<%= bgcol %>;">
         <div class="container">
             <div class="row">
                 <div class="col-xs-12 col-sm-8">
-                    <h1>SMK colorsearch</h1>
+                    <a href="/"><h1>SMK colorsearch</h1></a>
                     <p style="padding:40px;"></p>
                     <p></p>
                 </div>
@@ -29,11 +29,17 @@
     <div id="newstuff" class="row">
         <div class="gallery" id="gallery-container">
             <% for(var i=0; i<artworks.length; i++) {%>
-            <div class="col-thumbnail col-lg-3 col-md-4 col-sm-6">
+            <div class="col-lg-3 col-md-4 col-sm-6">
+                <div class="col-thumbnail">
                 <a href="<%= artworks[i].medium_image_url %>" class="thumbnail" data-lightbox="gallery" data-title="<%= artworks[i].title_dk %>">
-                    <img src="<%= artworks[i].medium_image_url %>" alt="<%= artworks[i].title_dk %>" title="<%= artworks[i].artist_name %>">
+                    <img src="<%= artworks[i].medium_image_url %>" alt="<%= artworks[i].title_dk  %>" title="<%= artworks[i].artist_name %>" >
                 </a>
+                    </div>
+                <div class = "caption">
+                    <p> <%= artworks[i].artist_name %></p>
+                </div>
             </div>
+
             <% } %>
         </div>
     </div>
