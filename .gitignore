@@ -29,6 +29,7 @@ build/Release
 tmp/*
 data/*
 public/data/*
+public/uploads/*
 colsearch/*
 node_modules
 .DS_Store
