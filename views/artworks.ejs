@@ -31,12 +31,12 @@
             <% for(var i=0; i<artworks.length; i++) {%>
             <div class="col-lg-3 col-md-4 col-sm-6">
                 <div class="col-thumbnail">
-                <a href="<%= artworks[i].medium_image_url %>" class="thumbnail" data-lightbox="gallery" data-title="<%= artworks[i].title_dk %>">
+                    <figure class="figure">
+                    <a href="<%= artworks[i].medium_image_url %>" class="thumbnail" data-lightbox="gallery" data-title="<%= artworks[i].title_dk %>">
                     <img src="<%= artworks[i].medium_image_url %>" alt="<%= artworks[i].title_dk  %>" title="<%= artworks[i].artist_name %>" >
-                </a>
-                    </div>
-                <div class = "caption">
-                    <p> <%= artworks[i].artist_name + artworks[i].id %></p>
+                    <figcaption class="figure-caption text-xs-right"> <%= artworks[i].artist_name + ' ' + artworks[i].id %></figcaption>
+                    </a>
+                    </figure>
                 </div>
             </div>
 

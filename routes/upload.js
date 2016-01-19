@@ -4,6 +4,8 @@ var express = require('express')
     , path = require('path')
     , crypto = require('crypto')
     , mime = require('mime')
+    , im = require('imagemagick')
+
 
 
 
@@ -15,7 +17,8 @@ var storage = multer.diskStorage({
     },
     filename: function (req, file, cb) {
         crypto.pseudoRandomBytes(16, function (err, raw) {
-            cb(null, 'colormap'+ '.' + mime.extension(file.mimetype));
+            cb(null, 'colormaptmp.jpg');
+            //cb(null, 'colormap'+ '.' + mime.extension(file.mimetype));
             //cb(null, raw.toString('hex') + Date.now() + '.' + mime.extension(file.mimetype));
         });
     }
@@ -26,7 +29,32 @@ var upload = multer({ storage: storage });
 
 router.post('/', upload.single('image'), function (req, res) {
     console.log("POST");
-    res.redirect('/');
+    console.log(JSON.stringify(req.body));
+    im.crop({
+        srcPath: 'public/uploads/colormaptmp.jpg',
+        dstPath: 'public/uploads/colormap.jpg',
+        width: 200,
+        height: 200,
+        quality: 1,
+        gravity: "North"
+    }, function(err, stdout, stderr){
+        if (err) {
+            console.log("err " + err);
+        } else {
+            console.log("done");
+            res.redirect('/');
+        }
+
+        // foo
+    });
+    /*
+    im.readMetadata('uploads/colormap.jpg', function(err, metadata){
+        if (err) throw err;
+        console.log('Shot at '+metadata.exif.dateTimeOriginal);
+    });
+    */
+
+
 });
 
 /*

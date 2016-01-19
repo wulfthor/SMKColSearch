@@ -18,7 +18,7 @@ router.post('/', function(req,res) {
                 querystring = color + "&fl=id,termfreq('color_text'," + color + ")&wt=json&rows=" + hits;
                 console.log("QS: " + querystring);
                 request({
-                    uri: 'http://172.20.1.61:8983/solr/colors/' + 'select?q=' + querystring,
+                    uri: 'http://172.20.1.61:8984/solr/colors/' + 'select?q=' + querystring,
                     method: 'GET'
                 }, function(error, response, body) {
                     if (error) {

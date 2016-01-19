@@ -17,7 +17,7 @@ router.get('/', function(req,res) {
     querystring = color + "&fl=id,termfreq('color_text'," + color + ")&wt=json&rows=" + hits;
     if (typeof req.query['color'] !== 'undefined') {
         var options = {
-            uri: 'http://172.20.1.61:8983/solr/colors/' +
+            uri: 'http://172.20.1.61:8984/solr/colors/' +
             'select?q=' +querystring,
             method: 'GET'
         }
