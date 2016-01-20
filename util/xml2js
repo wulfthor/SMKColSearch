@@ -1,0 +1,1 @@
+âˆ{"response":{"lst":[{"$":{"name":"responseHeader"},"int":[{"_":"0","$":{"name":"status"}},{"_":"2","$":{"name":"QTime"}}]},{"$":{"name":"terms"},"lst":[{"$":{"name":"color_text"},"int":[{"_":"614","$":{"name":"e8e5e0"}},{"_":"127","$":{"name":"e8e5ec"}},{"_":"71","$":{"name":"e8e5ee"}}]}]}]}}
