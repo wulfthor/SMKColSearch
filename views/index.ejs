@@ -13,13 +13,16 @@
     <div class="jumbotron">
         <div class="container">
             <div class="row">
-                <div class="col-xs-12 col-sm-8">
+                <div class="col-xs-12 col-sm-12">
                     <h1>SMK colorsearch</h1>
-                    <p style="padding:10px;"></p>
-                    <p></p>
-                </div>
-                <div class="col-xs-12 col-sm-4">
-                </div>
+                    <h2>Click on color in 256-colormap. The hex-value is submitted.
+                        Jumbotron-text on resultpage is return-link</h1>
+                        <h3>TODO: color-suggestion due to empty results<br>
+                            TODO: add interactivity for users to exclude<br>
+                            TODO: sub-colormap should be interactive<br>
+                            TODO: add labels and dates<br>
+                            TODO: add other search-options (artist name, sorting)</h3>
+
             </div>
         </div>
 </header>
@@ -35,27 +38,33 @@
 
         <form class="form-horizontal" role="form" action="/testroute" method="post">
             <div class="form-group">
-                <label for="hex" class="col-sm-1 control-label"></label>
+                <label for="hex" class="col-sm-1 control-label">RGB-Hex</label>
                 <div class="col-xs-7 col-sm-3 col-md-3">
-                    <input type="text" class="form-control" id="hex" name="hex" placeholder="Enter hex value">
+                    <input type="text" class="form-control" id="hex" name="hex" placeholder="Enter hex value" onchange="reportCol(this.value)">
                 </div>
             </div>
             <div class="form-group">
-                <label for="rgb" class="col-sm-1 control-label"></label>
+                <label for="rgb" class="col-sm-1 control-label">RGB</label>
                 <div class="col-xs-5 col-sm-3 col-md-3 col-lg-3">
                     <input type="text" class="form-control" id="rgb" name="rgb" placeholder="Enter RGB value">
                 </div>
             </div>
             <div class="form-group">
-                <label for="hsl" class="col-sm-1 control-label"></label>
+                <label for="hsl" class="col-sm-1 control-label">HCL</label>
                 <div class="col-xs-5 col-sm-4 col-md-3 col-lg-3">
                     <input type="text" class="form-control" id="hsl" name="hsl" placeholder="Enter HSL value">
                 </div>
             </div>
             <div class="form-group">
-                <label for="hits" class="col-sm-1 control-label"></label>
+                <label for="hits" class="col-sm-1 control-label">Max</label>
                 <div class="col-xs-5 col-sm-3 col-md-3 col-lg-3">
                     <input type="number" value="20" class="form-control" id="hits" name="hits" placeholder="Number of hits">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="hexcount" id="hexcountlabel" class="col-sm-1 control-label" style="display:none">Occurences</label>
+                <div class="col-xs-5 col-sm-3 col-md-3 col-lg-3">
+                    <input type="text" class="form-control" id="hexcount" name="hexcount" style="display:none">
                 </div>
             </div>
             <div class="form-group">
@@ -66,29 +75,32 @@
         </form>
 
     </div>
+    <div id="res"></div>
     <div class="row row-content">
-    <form class="form-inline" role="form" action="/upload" method="post" enctype="multipart/form-data">
-        <div class="form-group">
-            <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
-                <label class="checkbox">
+        <form class="form-inline" role="form" action="/upload" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+                    <label class="checkbox">
 
-                    <!--<input type="checkbox" value="apple" name="fruit" checked="checked" id="back" onchange="myFunction()"><label for="apple">Apple</label><br>-->
-                    <input type="checkbox" id="keywords" value="__option__" onclick="">back to orignal
-                </label>
+                        <!--<input type="checkbox" value="apple" name="fruit" checked="checked" id="back" onchange="myFunction()"><label for="apple">Apple</label><br>-->
+                        <input type="checkbox" id="keywords" value="__option__" onclick="">back to orignal
+                    </label>
+                </div>
             </div>
-        </div>
-        <div class="form-group">
-            <input type="file" name="image">
-            <button type="submit" id="mysubmit" class="btn btn-primary">Upload</button>
-        </div>
-    </form>
-        </div>
+            <div class="form-group">
+                <input type="file" name="image">
+                <button type="submit" id="mysubmit" class="btn btn-primary">Upload</button>
+            </div>
+        </form>
+    </div>
 </div>
 
 <script type="text/javascript" src="javascripts/jquery-min.js"></script>
 <script type="text/javascript" src="javascripts/bootstrap.min.js"></script>
 <script type="text/javascript" src="javascripts/lightbox.js"></script>
 <script type="text/javascript">
+
+
     var canvas = document.getElementById('canvas_picker').getContext('2d');
     var canvas2 = document.getElementById('canvas_picked').getContext('2d');
     var canvas3 = document.getElementById('canvas_var').getContext('2d');
@@ -220,8 +232,46 @@
         $('#hsl').val(hsl);
         $('#rgb').val(rgb);
         $('#hex').val('#' + hex);
+        $("#hex").change();
 
     });
+    function reportCol(myval) {
+
+        $.ajax({
+            url: '/checkf',
+            type: 'GET',
+            data: {
+                color: myval,
+                hits: '20'
+            },
+            error: function() {
+                console.log("erorr");
+                $('#info').html('<p>An error has occurred</p>');
+            },
+            dataType: 'json',
+            success: function(data) {
+                var aLength = data.terms.color_text.length;
+                console.log("done");
+                console.log("L :" + data.terms.color_text.length);
+                console.log((JSON.stringify(data.terms.color_text)));
+                $("#hexcount").show();
+                $("#hexcountlabel").show();
+                aLength ? $("#hexcount").val(data.terms.color_text.join()) : $("#hexcount").val("No artworks. Try another color");
+                //$("#hexcount").val(data.terms.color_text.join());
+                data.terms.color_text.forEach(function(val) {
+                    console.log(val);
+                });
+                /*
+                 var $title = $('<h1>').text(data.talks[0].talk_title);
+                 var $description = $('<p>').text(data.talks[0].talk_description);
+                 $('#info')
+                 .append($title)
+                 .append($description);
+                 */
+            },
+            type: 'GET'
+        });
+    };
 </script>
 
 </body>

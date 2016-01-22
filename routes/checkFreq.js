@@ -7,16 +7,18 @@ var request = require('request');
 
 
 router.get('/', function(req,res) {
-    console.log((req));
-    //var color = req.color.replace("#","");
-    var color = "e8e5e0";
-    color = color.toLowerCase();
-    var lookupCol = color;
+    console.log("R: " + req.query.color);
+    //R: /?color=e8e5e0&hits=20
+
+    //var color = req.urlreplace("#","");
+    //var color = "e8e5e0";
+    var color = req.query.color.toLowerCase();
+    var lookupCol = color.replace("#","");
     if ((color.length) == 6) {
         lookupCol = color.slice(0, -1);
     }
     //var hits = req.body.hits;
-    var hits = 20;
+    var hits = req.query.hits;
     console.log("PARAM " + color + " n " + hits);
     var retVal = '';
     querystring = "terms?terms.fl=color_text\&terms.sort=count\&terms.limit="+hits+"\&terms.prefix="+ lookupCol + "&indent=true&wt=json&omitHeader=true";
@@ -28,7 +30,7 @@ router.get('/', function(req,res) {
         if (error) {
             console.log(error);
         } else {
-            console.log(body);
+            console.log("BO: ");
             //var retval = JSON.parse(body);
             /*
             parseString(body, function (err, result) {
@@ -42,7 +44,7 @@ router.get('/', function(req,res) {
             });
             */
             //console.log(response.statusCode, JSON.stringify(body));
-            res.send('howdy');
+            res.send(body);
         }
         console.log("out");
     });
