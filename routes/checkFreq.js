@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var http = require('http');
 var request = require('request');
+var config = require('../env.json');
 
 //curl -s http://172.20.1.61:8984/solr/colors/terms?terms.fl=color_text\&terms.sort=count\&terms.limit=$limit\&terms.prefix=$prefix
 
@@ -24,7 +25,7 @@ router.get('/', function(req,res) {
     querystring = "terms?terms.fl=color_text\&terms.sort=count\&terms.limit="+hits+"\&terms.prefix="+ lookupCol + "&indent=true&wt=json&omitHeader=true";
     console.log("QS: " + querystring);
     request({
-        uri: 'http://172.20.1.61:8984/solr/colors/' + querystring,
+        uri: 'http://' + config.SOLR_HOST + ':' + config.SOLR_PORT + '/solr/colors/' + querystring,
         method: 'GET'
     }, function(error, response, body) {
         if (error) {
