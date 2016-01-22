@@ -4,6 +4,7 @@ var http = require('http');
 var request = require('request');
 var Promise = require('bluebird');
 var async = require('async');
+var config = require('../env.json');
 
 
 router.post('/', function(req,res) {
@@ -18,7 +19,7 @@ router.post('/', function(req,res) {
                 querystring = color + "&fl=id,termfreq('color_text'," + color + ")&wt=json&rows=" + hits;
                 console.log("QS: " + querystring);
                 request({
-                    uri: 'http://172.20.1.61:8984/solr/colors/' + 'select?q=' + querystring,
+                    uri: 'http://' + config.SOLR_HOST + ':' + config.SOLR_PORT + '/solr/colors/' + 'select?q=' + querystring,
                     method: 'GET'
                 }, function(error, response, body) {
                     if (error) {
@@ -44,7 +45,7 @@ router.post('/', function(req,res) {
                 console.log(subquerystring);
 
                 request({
-                    uri: 'http://solr-02.smk.dk:8080/solr/prod_all_dk/' + 'select?q=id:' + subquerystring,
+                    uri: 'http://' + config.SOLR_SEBHOST + '/solr/prod_all_dk/' + 'select?q=id:' + subquerystring,
                     method: 'GET', //Specify the method
 
                 }, function (error, response, body) {
