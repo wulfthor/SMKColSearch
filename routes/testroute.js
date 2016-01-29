@@ -19,7 +19,7 @@ router.post('/', function(req,res) {
                 querystring = color + "&fl=id,termfreq('color_text'," + color + ")&wt=json&rows=" + hits;
                 console.log("QS: " + querystring);
                 request({
-                    uri: 'http://' + config.SOLR_HOST + ':' + config.SOLR_PORT + '/solr/colors/' + 'select?q=' + querystring,
+                    uri: 'http://' + config.development.SOLR_HOST + ':' + config.development.SOLR_PORT + '/solr/colors/' + 'select?q=' + querystring,
                     method: 'GET'
                 }, function(error, response, body) {
                     if (error) {
@@ -45,7 +45,7 @@ router.post('/', function(req,res) {
                 console.log(subquerystring);
 
                 request({
-                    uri: 'http://' + config.SOLR_SEBHOST + '/solr/prod_all_dk/' + 'select?q=id:' + subquerystring,
+                    uri: 'http://' + config.development.SOLR_SEBHOST + '/solr/prod_all_dk/' + 'select?q=id:' + subquerystring,
                     method: 'GET', //Specify the method
 
                 }, function (error, response, body) {

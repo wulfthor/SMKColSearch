@@ -1,7 +1,7 @@
-    <!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
-    <title><%= title %></title>
+    <title><%= titel %></title>
     <link rel='stylesheet' href='stylesheets/bootstrap.min.css' />
     <link rel='stylesheet' href='stylesheets/lightbox.css' />
     <link rel='stylesheet' href='stylesheets/smk_modif.css' />
@@ -15,15 +15,13 @@
             <div class="row">
                 <div class="col-xs-12 col-sm-12">
                     <h1>SMK colorsearch</h1>
-                    <h2>Click on color in 256-colormap. The hex-value is submitted.
-                        Jumbotron-text on resultpage is return-link</h2>
-                    </div>
             </div>
         </div>
 </header>
 <div class="container">
     <div class="row row-content">
             <div class="col-md-4">
+                <input type="hidden" name="newimg" id="newimg" value="<%= imgsrc  %>">
         <canvas width="300" height="300" id="canvas_picker"></canvas>
                 <label for="canvas_var" id="canvas_var_label" name="canvas_var_label" class=" control-label" style="display:none">Chosen color</label>
                 <canvas width="100" height="50" id="canvas_picked"></canvas>
@@ -107,18 +105,7 @@
 <script type="text/javascript">
 
 
-    var canvas = document.getElementById('canvas_picker').getContext('2d');
-    var canvas2 = document.getElementById('canvas_picked').getContext('2d');
-    var canvas3 = document.getElementById('canvas_var').getContext('2d');
 
-    // create an image object and get it’s source
-    var img = new Image();
-    img.src = '/uploads/colormap.jpg';
-
-    // copy the image to the canvas
-    $(img).load(function(){
-        canvas.drawImage(img,20,20);
-    });
 
     // http://www.javascripter.net/faq/rgbtohex.htm
     function rgbToHex(R,G,B) {return toHex(R)+toHex(G)+toHex(B)}
@@ -206,6 +193,21 @@
         return [r * 255, g * 255, b * 255];
     }
 
+    var canvas = document.getElementById('canvas_picker').getContext('2d');
+    var canvas2 = document.getElementById('canvas_picked').getContext('2d');
+    var canvas3 = document.getElementById('canvas_var').getContext('2d');
+
+    var imageObj = new Image();
+    imageObj.crossOrigin = "Anonymous";
+    imageObj.onload = function() {
+        canvas.drawImage(imageObj, 20, 20);
+    };
+    imageObj.src =  $('#newimg').val();
+
+
+
+        //img.src = '/uploads/colormap.jpg';
+        //var ref = $('#newimg').val();
 
 
     $('#canvas_picker').click(function(event){

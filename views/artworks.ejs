@@ -28,6 +28,7 @@
 <div class="container">
     <div id="newstuff" class="row">
         <div class="gallery" id="gallery-container">
+           <form class="form-horizontal" role="form" action="/explore" method="post">
             <% for(var i=0; i<artworks.length; i++) {%>
             <div class="col-lg-3 col-md-4 col-sm-6">
                 <div class="col-thumbnail">
@@ -35,12 +36,24 @@
                     <a href="<%= artworks[i].medium_image_url %>" class="thumbnail" data-lightbox="gallery" data-title="<%= artworks[i].title_dk %>">
                     <img src="<%= artworks[i].medium_image_url %>" alt="<%= artworks[i].title_dk  %>" title="<%= artworks[i].artist_name %>" >
                     <figcaption class="figure-caption text-xs-right"> <%= artworks[i].artist_name + ' ' + artworks[i].id %></figcaption>
+
                     </a>
+
+                        <div class="radio">
+                            <label><input type="radio" checked="checked" class="myradio" value="<%=artworks[i].id%>" name="comment" id="comment-<%=artworks[i].id + "-" + i%>" />Explore</label>
+                        </div>
+
                     </figure>
                 </div>
             </div>
 
             <% } %>
+                <div class="form-group">
+                    <div class="col-xs-5 col-sm-3 col-md-3 col-lg-3">
+                        <button type="submit" class="btn btn-primary">Explore</button>
+                    </div>
+                </div>
+                </form>
         </div>
     </div>
 </div>
@@ -48,7 +61,41 @@
 <script type="text/javascript" src="javascripts/jquery-min.js"></script>
 <script type="text/javascript" src="javascripts/bootstrap.min.js"></script>
 <script type="text/javascript" src="javascripts/lightbox.js"></script>
+<script>
+    //$('div .mycheckbox').prop( "checked", true );
+    $('div .myradio').attr('checked', false);
 
+    var radioValues = '';
+
+    $('input[type="radio"]:checked').each(function() {
+        radioValues += $(this).attr('name')+' = '+$(this).val()+'\n';
+    });
+    console.log("R: " + radioValues);
+
+    $('div .myradio').click(function () {
+
+        console.log("into chc" + $(this).attr('name')+' = '+$(this).val()+'\n' );
+        var keeper = $(this).attr('id');
+        $('input[type="radio"]:checked').each(function() {
+
+            $(this).attr('checked', false);
+        });
+
+      //  "#" + inputID + ".inputfield")
+
+    //$("input[name=q12_3]:checked").val());
+        $("#" + keeper).attr('checked', true);
+        $("#" + keeper).prop('checked', true);
+
+
+        console.log("K " + keeper);
+
+        //$(this).checked = false;
+        //$(this).prop('checked', false);
+
+    });
+    //$(this).prop('checked', true);
+</script>
 </body>
 </html>
 

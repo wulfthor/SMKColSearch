@@ -39,18 +39,7 @@ router.get('/', function(req,res) {
             console.log("her ..");
 
             res.send('hejj');
-            
-            //res.send('hej');
 
-            //console.log(mData.response.docs[0]);
-            /*
-             res.render('artworks', {
-             titel: 'her er vi',
-             kunstner: mData.response.docs[0].artists_data,
-             awid: mData.response.docs[0].id_s,
-             awurl: mData.response.docs[0].externalurl
-             });
-             */
         });
     }
 });

@@ -10,6 +10,12 @@ var artworks = require('./routes/artworks');
 var testroute = require('./routes/testroute');
 var upload = require('./routes/upload');
 var checkF = require('./routes/checkFreq');
+var adcomments = require('./routes/adcomments');
+var explore = require('./routes/explore');
+var mongoose = require('mongoose');
+var dbSMK = 'mongodb://localhost/smkdata';
+var cors = require('cors');
+var db = mongoose.connect(dbSMK);
 
 var app = express();
 
@@ -25,11 +31,16 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+
 app.use('/', routes);
 app.use('/artworks', artworks);
 app.use('/testroute', testroute);
 app.use('/upload', upload);
 app.use('/checkf', checkF);
+app.use('/adcomments', adcomments);
+app.use('/explore', explore);
+
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
