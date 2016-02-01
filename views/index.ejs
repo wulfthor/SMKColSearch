@@ -1,4 +1,4 @@
-    <!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
     <title><%= title %></title>
@@ -9,30 +9,26 @@
 
 </head>
 <body>
-<header>
-    <div class="jumbotron">
-        <div class="container">
-            <div class="row">
-                <div class="col-xs-12 col-sm-12">
-                    <h1>SMK colorsearch</h1>
-                    <h2>Click on color in 256-colormap. The hex-value is submitted.
-                        Jumbotron-text on resultpage is return-link</h2>
-                    </div>
-            </div>
-        </div>
-</header>
+
 <div class="container">
     <div class="row row-content">
-            <div class="col-md-4">
-        <canvas width="300" height="300" id="canvas_picker"></canvas>
-                <label for="canvas_var" id="canvas_var_label" name="canvas_var_label" class=" control-label" style="display:none">Chosen color</label>
-                <canvas width="100" height="50" id="canvas_picked"></canvas>
-                <canvas width="250" height="250" id="canvas_var"></canvas>
+    
+            <canvas width="250" height="250" id="canvas_orig" name="canvas_orig"></canvas>
 
-            </div>
+
+
+            <canvas width="250" height="250" id="canvas_pix" name="canvas_pix"></canvas>
+
+
+
+
+            <label for="canvas_col" id="canvas_col_label" name="canvas_col_label" class=" control-label" style="display:none">Chosen color</label>
+            <canvas width="100" height="50" id="canvas_col" name="canvas_col"></canvas>
 
 
     </div>
+
+
     <div class="row row-content">
 
         <form class="form-horizontal" role="form" action="/testroute" method="post">
@@ -80,25 +76,25 @@
         </form>
 
     </div>
-<!--    <div id="res"></div>
+    <!--    <div id="res"></div>
 
-    <div class="row row-content">
-        <form class="form-inline" role="form" action="/upload" method="post" enctype="multipart/form-data">
-            <div class="form-group">
-                <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
-                    <label class="checkbox">
+        <div class="row row-content">
+            <form class="form-inline" role="form" action="/upload" method="post" enctype="multipart/form-data">
+                <div class="form-group">
+                    <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+                        <label class="checkbox">
 
-                        &lt;!&ndash;<input type="checkbox" value="apple" name="fruit" checked="checked" id="back" onchange="myFunction()"><label for="apple">Apple</label><br>&ndash;&gt;
-                        <input type="checkbox" id="keywords" value="__option__" onclick="">back to orignal
-                    </label>
+                            &lt;!&ndash;<input type="checkbox" value="apple" name="fruit" checked="checked" id="back" onchange="myFunction()"><label for="apple">Apple</label><br>&ndash;&gt;
+                            <input type="checkbox" id="keywords" value="__option__" onclick="">back to orignal
+                        </label>
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <input type="file" name="image">
-                <button type="submit" id="mysubmit" class="btn btn-primary">Upload</button>
-            </div>
-        </form>
-    </div>-->
+                <div class="form-group">
+                    <input type="file" name="image">
+                    <button type="submit" id="mysubmit" class="btn btn-primary">Upload</button>
+                </div>
+            </form>
+        </div>-->
 </div>
 
 <script type="text/javascript" src="javascripts/jquery-min.js"></script>
@@ -107,17 +103,110 @@
 <script type="text/javascript">
 
 
-    var canvas = document.getElementById('canvas_picker').getContext('2d');
-    var canvas2 = document.getElementById('canvas_picked').getContext('2d');
-    var canvas3 = document.getElementById('canvas_var').getContext('2d');
+    var canvas = document.getElementById('canvas_orig').getContext('2d');
+    var canvas2 = document.getElementById('canvas_pix').getContext('2d');
+    var canvas3 = document.getElementById('canvas_col').getContext('2d');
+
 
     // create an image object and get it’s source
     var img = new Image();
-    img.src = '/uploads/colormap.jpg';
+    var imgpix = new Image();
+    imgpix.src = '/uploads/colormappix.png';
+    img.src = '/uploads/colormap.jpg'
 
     // copy the image to the canvas
     $(img).load(function(){
         canvas.drawImage(img,20,20);
+    });
+    $(imgpix).load(function(){
+        canvas2.drawImage(imgpix,20,20);
+    });
+
+
+    $('#canvas_pix').click(function(event){
+        //var canvas2 = document.getElementById('canvas_pix').getContext('2d');
+        // getting user coordinates
+        var x = event.pageX - this.offsetLeft;
+        var y = event.pageY - this.offsetTop;
+        console.log("X " + x);
+        console.log("y " + y);
+        // getting image data and RGB values
+        var img_data = canvas2.getImageData(x, y, 1, 1).data;
+        var R = img_data[0];
+        var G = img_data[1];
+        var B = img_data[2];
+        var rgb = R + ',' + G + ',' + B;
+        console.log("C " + img_data);
+        // convert RGB to HEX
+        var hex = rgbToHex(R,G,B);
+        var hsl = rgbToHsl(R, G, B);
+        // making the color the value of the input'
+        // making the color the value of the input'
+        /*
+         for (var i=0;i<12;i++) {
+         for (var j = 0; j < 6; j++) {
+         canvas3.fillStyle = 'rgb(' + Math.floor(R - 22.5 * i) + ',' + Math.floor(G - 22.5 * j) + ',' + B + ')';
+         canvas3.fillRect(j * 25, i * 25, 25, 25);
+         }
+         for (var j = 6; j < 12; j++) {
+         canvas3.fillStyle = 'rgb(' + Math.floor(R + 22.5 * i) + ',' + Math.floor(G + 22.5 * j) + ',' + B + ')';
+         canvas3.fillRect(j * 25, i * 25, 25, 25);
+         }
+         }
+         */
+
+        var fillVal = "#" + hex;
+
+        canvas3.fillStyle=fillVal;
+        canvas3.fillRect(20,20,150,100);
+
+        $('#hsl').val(hsl);
+        $('#rgb').val(rgb);
+        $('#hex').val('#' + hex);
+        $("#hex").change();
+        $("#canvas_col_label").show();
+
+    });
+
+    $('#canvas_orig').click(function(event){
+        // getting user coordinates
+        var x = event.pageX - this.offsetLeft;
+        var y = event.pageY - this.offsetTop;
+        // getting image data and RGB values
+        var img_data = canvas.getImageData(x, y, 1, 1).data;
+        var R = img_data[0];
+        var G = img_data[1];
+        var B = img_data[2];
+        var rgb = R + ',' + G + ',' + B;
+        console.log("c " + rgb + " " + x + " " + y);
+        // convert RGB to HEX
+        var hex = rgbToHex(R,G,B);
+        var hsl = rgbToHsl(R, G, B);
+        // making the color the value of the input'
+        /*
+         for (var i=0;i<12;i++) {
+         for (var j = 0; j < 6; j++) {
+         canvas3.fillStyle = 'rgb(' + Math.floor(R - 22.5 * i) + ',' +
+         Math.floor(G - 22.5 * j) + ',' + B + ')';
+         canvas3.fillRect(j * 25, i * 25, 25, 25);
+         }
+         for (var j = 6; j < 12; j++) {
+         canvas3.fillStyle = 'rgb(' + Math.floor(R + 22.5 * i) + ',' + Math.floor(G + 22.5 * j) + ',' + B + ')';
+         canvas3.fillRect(j * 25, i * 25, 25, 25);
+         }
+         }
+         */
+
+        var fillVal = "#" + hex;
+
+        canvas3.fillStyle=fillVal;
+        canvas3.fillRect(20,20,150,100);
+
+        $('#hsl').val(hsl);
+        $('#rgb').val(rgb);
+        $('#hex').val('#' + hex);
+        $("#hex").change();
+
     });
 
     // http://www.javascripter.net/faq/rgbtohex.htm
@@ -208,82 +297,6 @@
 
 
 
-    $('#canvas_picker').click(function(event){
-        // getting user coordinates
-        var x = event.pageX - this.offsetLeft;
-        var y = event.pageY - this.offsetTop;
-        // getting image data and RGB values
-        var img_data = canvas.getImageData(x, y, 1, 1).data;
-        var R = img_data[0];
-        var G = img_data[1];
-        var B = img_data[2];
-        var rgb = R + ',' + G + ',' + B;
-        // convert RGB to HEX
-        var hex = rgbToHex(R,G,B);
-        var hsl = rgbToHsl(R, G, B);
-        // making the color the value of the input'
-        // making the color the value of the input'
-        for (var i=0;i<12;i++) {
-            for (var j = 0; j < 6; j++) {
-                canvas3.fillStyle = 'rgb(' + Math.floor(R - 22.5 * i) + ',' + Math.floor(G - 22.5 * j) + ',' + B + ')';
-                canvas3.fillRect(j * 25, i * 25, 25, 25);
-            }
-            for (var j = 6; j < 12; j++) {
-                canvas3.fillStyle = 'rgb(' + Math.floor(R + 22.5 * i) + ',' + Math.floor(G + 22.5 * j) + ',' + B + ')';
-                canvas3.fillRect(j * 25, i * 25, 25, 25);
-            }
-        }
-
-        var fillVal = "#" + hex;
-
-        canvas2.fillStyle=fillVal;
-        canvas2.fillRect(20,20,150,100);
-
-        $('#hsl').val(hsl);
-        $('#rgb').val(rgb);
-        $('#hex').val('#' + hex);
-        $("#hex").change();
-        $("#canvas_var_label").show();
-
-    });
-
-    $('#canvas_var').click(function(event){
-        // getting user coordinates
-        var x = event.pageX - this.offsetLeft;
-        var y = event.pageY - this.offsetTop;
-        // getting image data and RGB values
-        var img_data = canvas3.getImageData(x, y, 1, 1).data;
-        var R = img_data[0];
-        var G = img_data[1];
-        var B = img_data[2];
-        var rgb = R + ',' + G + ',' + B;
-        // convert RGB to HEX
-        var hex = rgbToHex(R,G,B);
-        var hsl = rgbToHsl(R, G, B);
-        // making the color the value of the input'
-        for (var i=0;i<12;i++) {
-            for (var j = 0; j < 6; j++) {
-                canvas3.fillStyle = 'rgb(' + Math.floor(R - 22.5 * i) + ',' +
-                        Math.floor(G - 22.5 * j) + ',' + B + ')';
-                canvas3.fillRect(j * 25, i * 25, 25, 25);
-            }
-            for (var j = 6; j < 12; j++) {
-                canvas3.fillStyle = 'rgb(' + Math.floor(R + 22.5 * i) + ',' + Math.floor(G + 22.5 * j) + ',' + B + ')';
-                canvas3.fillRect(j * 25, i * 25, 25, 25);
-            }
-        }
-
-        var fillVal = "#" + hex;
-
-        canvas2.fillStyle=fillVal;
-        canvas2.fillRect(20,20,150,100);
-
-        $('#hsl').val(hsl);
-        $('#rgb').val(rgb);
-        $('#hex').val('#' + hex);
-        $("#hex").change();
-
-    });
     function reportCol(myval) {
 
         $.ajax({

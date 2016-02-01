@@ -29,7 +29,7 @@ var upload = multer({ storage: storage });
 
 router.post('/', upload.single('image'), function (req, res) {
     console.log("POST");
-    console.log(JSON.stringify(req.body));
+    console.log("BOD " + JSON.stringify(req.body));
     im.crop({
         srcPath: 'public/uploads/colormaptmp.jpg',
         dstPath: 'public/uploads/colormap.jpg',

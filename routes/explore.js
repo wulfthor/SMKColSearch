@@ -5,11 +5,15 @@ var request = require('request');
 var config = require('../env.json');
 var fs = require('fs');
 var im = require('imagemagick');
+var spawn = require("child_process").spawn;
 
+
+// query for term-frequency
+//http://172.20.1.61:8984/solr/colors/select/?fl=id,termfreq(color_text,%22111a69%22)&defType=func&q=termfreq(color_text,%22111a69%22)&fq=id:KMS8439
 
 router.post('/', function(req,res) {
 
-    console.log(JSON.stringify(req.body));
+    console.log("Body " + JSON.stringify(req.body));
 
 
     subquerystring = req.body.comment + "&fl=id,medium_image_url,title_dk,artist_name,object_production_date_earliest&wt=json";
@@ -32,13 +36,23 @@ router.post('/', function(req,res) {
                 console.log(JSON.stringify(info.response.docs[0]));
                 // now perform the wget
                 var newurl = info.response.docs[0].medium_image_url;
+                var arg1 = '/home/thw/git/colorsearch/public/uploads/colormappix.png';
+                var src = '/home/thw/git/colorsearch/public/uploads/colormap.jpg';
+                //var arg1 = "/home/thw/git/colosearch/util/" + req.body.newname + ".jpg";
+                var arg2 = 20;
+                var arg3 = "mytest";
+                console.log("a1 " + arg1);
+                console.log("a2 " + arg2);
+                console.log("a3 " + arg3);
 
                 var picStream = fs.createWriteStream('public/uploads/colormaptmp.jpg');
                 picStream.on('close', function() {
                     // now scale
+                    // doPixelate.py KMS8355.jpg 50 colormappix
                     im.crop({
-                        srcPath: 'public/uploads/colormaptmp.jpg',
-                        dstPath: 'public/uploads/colormap.jpg',
+                        srcPath: '/home/thw/git/colorsearch/public/uploads/colormaptmp.jpg',
+                        dstPath:  '/home/thw/git/colorsearch/public/uploads/colormap.jpg',
+//                        dstPath: 'public/uploads/' + req.body.newname + '.jpg',
                         width: 200,
                         height: 200,
                         quality: 1,
@@ -47,8 +61,14 @@ router.post('/', function(req,res) {
                         if (err) {
                             console.log("err " + err);
                         } else {
-                            console.log("done");
-                            res.redirect('/');
+                            var child = spawn('python',["util/doPixelate.py", src, arg2, arg1]);
+                            console.log("done pixel ...");
+                            child.stdout.on('close',
+                                function (data) {
+                                    console.log('done total ..');
+                                    res.redirect('/');
+                                }
+                            );
                         }
                     });
 
@@ -60,8 +80,8 @@ router.post('/', function(req,res) {
                         console.log(err)
                     })
                     .pipe(picStream);
-                    /*
 
+/*
                 res.render('explore', {
                     titel: info.response.docs[0].artist_name + ", " + info.response.docs[0].title_dk,
                     imgsrc: info.response.docs[0].medium_image_url
