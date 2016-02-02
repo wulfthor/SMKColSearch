@@ -6,6 +6,7 @@
     ".txt",
     "node_modules/**/node_modules",
     "public/data/*",
+    "public/uploads/*",
     "data/*",
     "util/*",
     "colorsearch/*"

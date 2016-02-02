@@ -9,21 +9,26 @@
 
 </head>
 <body>
-
+<header>
+    <div class="jumbotron">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12 col-sm-12">
+                    <h1>SMK colorsearch</h1>
+                    <h2>Click on color in 256-colormap. The hex-value is submitted.
+                        Jumbotron-text on resultpage is return-link</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
 <div class="container">
     <div class="row row-content">
-    
-            <canvas width="250" height="250" id="canvas_orig" name="canvas_orig"></canvas>
 
-
-
-            <canvas width="250" height="250" id="canvas_pix" name="canvas_pix"></canvas>
-
-
-
-
-            <label for="canvas_col" id="canvas_col_label" name="canvas_col_label" class=" control-label" style="display:none">Chosen color</label>
-            <canvas width="100" height="50" id="canvas_col" name="canvas_col"></canvas>
+            <canvas width="300" height="300" id="canvas_orig" name="canvas_orig"></canvas>
+            <canvas width="300" height="300" id="canvas_pix" name="canvas_pix"></canvas>
+        <input type="text"  id="hexcount" name="hexcount" style="display:none" readonly >
+                        <canvas width="200" height="300" id="canvas_col" name="canvas_col"></canvas>
 
 
     </div>
@@ -31,7 +36,7 @@
 
     <div class="row row-content">
 
-        <form class="form-horizontal" role="form" action="/testroute" method="post">
+        <form class="form-horizontal" role="form" action="/toartworks" method="post">
             <div class="form-group">
                 <label for="colval" class="col-sm-1 control-label" style="display:none">Chosen color</label>
                 <div class="col-xs-7 col-sm-3 col-md-3">
@@ -43,14 +48,12 @@
                 <div class="col-xs-7 col-sm-3 col-md-3">
                     <input type="text" class="form-control" id="hex" name="hex" placeholder="Enter hex value" onchange="reportCol(this.value)">
                 </div>
-            </div>
-            <div class="form-group">
+
                 <label for="rgb" class="col-sm-1 control-label">RGB</label>
                 <div class="col-xs-5 col-sm-3 col-md-3 col-lg-3">
                     <input type="text" class="form-control" id="rgb" name="rgb" placeholder="Enter RGB value">
                 </div>
-            </div>
-            <div class="form-group">
+
                 <label for="hsl" class="col-sm-1 control-label">HCL</label>
                 <div class="col-xs-5 col-sm-4 col-md-3 col-lg-3">
                     <input type="text" class="form-control" id="hsl" name="hsl" placeholder="Enter HSL value">
@@ -61,10 +64,17 @@
                 <div class="col-xs-5 col-sm-3 col-md-3 col-lg-3">
                     <input type="number" value="20" class="form-control" id="hits" name="hits" placeholder="Number of hits">
                 </div>
+                <label for="pix" class="col-sm-1 control-label">Pixel</label>
+                <div class="col-xs-5 col-sm-3 col-md-3 col-lg-3">
+                    <input type="number" value="20" class="form-control" id="pix" name="pix" placeholder="Pixel unit size">
+                </div>
+                <label for="ss" class="col-sm-1 control-label">Search</label>
+                <div class="col-xs-5 col-sm-3 col-md-3 col-lg-3">
+                    <input type="text" class="form-control" id="ss" name="ss" placeholder="Enter KMS value" onchange="searchSMK(this.value)">
+                </div>
             </div>
             <div class="form-group">
-                <label for="hexcount" id="hexcountlabel" class="col-sm-1 control-label" style="display:none">Occurences</label>
-                <div class="col-xs-5 col-sm-3 col-md-3 col-lg-3">
+                 <div class="col-xs-5 col-sm-3 col-md-3 col-lg-3">
                     <input type="text" class="form-control" id="hexcount" name="hexcount" style="display:none">
                 </div>
             </div>
@@ -140,21 +150,6 @@
         // convert RGB to HEX
         var hex = rgbToHex(R,G,B);
         var hsl = rgbToHsl(R, G, B);
-        // making the color the value of the input'
-        // making the color the value of the input'
-        /*
-         for (var i=0;i<12;i++) {
-         for (var j = 0; j < 6; j++) {
-         canvas3.fillStyle = 'rgb(' + Math.floor(R - 22.5 * i) + ',' + Math.floor(G - 22.5 * j) + ',' + B + ')';
-         canvas3.fillRect(j * 25, i * 25, 25, 25);
-         }
-         for (var j = 6; j < 12; j++) {
-         canvas3.fillStyle = 'rgb(' + Math.floor(R + 22.5 * i) + ',' + Math.floor(G + 22.5 * j) + ',' + B + ')';
-         canvas3.fillRect(j * 25, i * 25, 25, 25);
-         }
-         }
-         */
-
         var fillVal = "#" + hex;
 
         canvas3.fillStyle=fillVal;
@@ -182,21 +177,6 @@
         // convert RGB to HEX
         var hex = rgbToHex(R,G,B);
         var hsl = rgbToHsl(R, G, B);
-        // making the color the value of the input'
-        /*
-         for (var i=0;i<12;i++) {
-         for (var j = 0; j < 6; j++) {
-         canvas3.fillStyle = 'rgb(' + Math.floor(R - 22.5 * i) + ',' +
-         Math.floor(G - 22.5 * j) + ',' + B + ')';
-         canvas3.fillRect(j * 25, i * 25, 25, 25);
-         }
-         for (var j = 6; j < 12; j++) {
-         canvas3.fillStyle = 'rgb(' + Math.floor(R + 22.5 * i) + ',' + Math.floor(G + 22.5 * j) + ',' + B + ')';
-         canvas3.fillRect(j * 25, i * 25, 25, 25);
-         }
-         }
-         */
-
         var fillVal = "#" + hex;
 
         canvas3.fillStyle=fillVal;
@@ -295,6 +275,30 @@
         return [r * 255, g * 255, b * 255];
     }
 
+    function searchSMK(myval) {
+        console.log("into out ..");
+
+        $.ajax({
+            url: '/searchSMK',
+            type: 'POST',
+            data: {
+                id: myval,
+                hits: '20',
+                pix: $('#pix').val()
+            },
+
+            error: function(xhr, status, error) {
+                console.log("erorr" + xhr.responseText + " ss " + status + " err " + error);
+                $('#info').html('<p>An error has occurred</p>');
+            },
+            dataType: 'html',
+            success: function() {
+                console.log("done it");
+                location.reload();
+
+            },
+        });
+    };
 
 
     function reportCol(myval) {
@@ -307,7 +311,7 @@
                 hits: '20'
             },
             error: function() {
-                console.log("erorr");
+                console.log("error");
                 $('#info').html('<p>An error has occurred</p>');
             },
             dataType: 'json',
@@ -315,16 +319,17 @@
                 var aLength = data.terms.color_text.length;
                 $("#hexcount").show();
                 $("#hexcountlabel").show();
-                aLength ? $("#hexcount").val(data.terms.color_text.join()) : $("#hexcount").val("No artworks. Try another color");
+                //aLength ? $("#hexcount").val(data.terms.color_text.join()) : $("#hexcount").val("No artworks. Try another color");
+                aLength ? $("#hexcount").val("Artworks found: " + data.terms.color_text[1]) : $("#hexcount").val("No artworks. Try another color");
 
                 data.terms.color_text.forEach(function(val) {
-                    console.log(val);
+                    console.log("V :" + val);
                 });
 
             },
-            type: 'GET'
         });
     };
+
 </script>
 
 </body>

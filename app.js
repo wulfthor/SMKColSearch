@@ -7,9 +7,10 @@ var bodyParser = require('body-parser');
 
 var routes = require('./routes/index');
 var artworks = require('./routes/artworks');
-var testroute = require('./routes/testroute');
+var toartworks = require('./routes/toartworks');
 var upload = require('./routes/upload');
 var checkF = require('./routes/checkFreq');
+var searchSMK = require('./routes/searchSMK');
 var adcomments = require('./routes/adcomments');
 var explore = require('./routes/explore');
 var mongoose = require('mongoose');
@@ -34,11 +35,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
 app.use('/artworks', artworks);
-app.use('/testroute', testroute);
+app.use('/toartworks', toartworks);
 app.use('/upload', upload);
 app.use('/checkf', checkF);
 app.use('/adcomments', adcomments);
 app.use('/explore', explore);
+app.use('/searchSMK', searchSMK);
 
 
 

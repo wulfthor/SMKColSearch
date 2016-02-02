@@ -14,10 +14,10 @@ var spawn = require("child_process").spawn;
 router.post('/', function(req,res) {
 
     console.log("Body " + JSON.stringify(req.body));
-    var pixelunit = req.body.pixunit;
-    console.log("P: " + pixelunit);
+    var pixelunit = req.body.pix;
 
-    subquerystring = req.body.comment + "&fl=id,medium_image_url,title_dk,artist_name,object_production_date_earliest&wt=json";
+
+    subquerystring = req.body.id + "&fl=id,medium_image_url,title_dk,artist_name,object_production_date_earliest&wt=json";
     console.log(subquerystring);
 
     request({
@@ -54,7 +54,7 @@ router.post('/', function(req,res) {
                         srcPath: config.HOME + '/public/uploads/colormaptmp.jpg',
                         dstPath:  config.HOME + '/public/uploads/colormap.jpg',
 //                        dstPath: 'public/uploads/' + req.body.newname + '.jpg',
-                        width: 300,
+                        width: 200,
                         //height: 200,
                         quality: 1,
                         gravity: "North"
@@ -67,6 +67,7 @@ router.post('/', function(req,res) {
                             child.stdout.on('close',
                                 function (data) {
                                     console.log('done total ..');
+                                    //res.redirect('back');
                                     res.redirect('/');
                                 }
                             );

@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var http = require('http');
-var config = require('../env.json');
+var config = require('../env.json').development;
 var Comment = require('../models/comment');
 
 
