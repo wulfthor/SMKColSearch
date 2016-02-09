@@ -32,6 +32,8 @@
         <div >
             <input type="text"  id="hexcount" name="hexcount" style="display:none" readonly >
             <input type="hidden" name="source" value="<%= source %>" />
+            <input type="hidden" name="artistname" value="<%= artistname %>" />
+            <input type="hidden" name="prodyear" value="<%= prodyear %>" />
         </div>
     </div>
     <div class="row">
@@ -71,7 +73,7 @@
                     </div>
                     <div class="col-xs-12 col-sm-4">
                         <label for="year" class="control-label">Year</label>
-                        <input type="number" value="1890" class="form-control" id="year" name="year" placeholder="year ">
+                        <input type="number" value="<%= prodyear %>" class="form-control" id="year" name="year" placeholder="year ">
                     </div>
                 </div>
                 <div class="form-group">

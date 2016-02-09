@@ -16,15 +16,21 @@ router.get('/', function(req, res) {
     if ( typeof req.query.id !== 'undefined' && req.query.id ) {
         console.log(req.query.id);
         sourceid = req.query.id;
+        prodyear = req.query.prodyear;
+        artistname = req.query.artistname;
     } else {
         console.log("No id");
         sourceid = "KMS0";
+        artistname = "KMS0";
+        prodyear = "0";
 
     }
 
     res.render('index', {
             title: 'Search SMK by Colors',
-            source: sourceid
+            source: sourceid,
+            name: artistname,
+            year: prodyear
         });
 });
 

@@ -91,24 +91,28 @@ router.post('/', function(req,res) {
                     }
 
                 });
+                var newToSendArr = new Array();
 
-                newToSendArr = toSendArr.map(function(item) {
+                toSendArr.forEach(function(item) {
                     //"object_production_date_earliest":"1954-01-01T00:00:00Z"
                     console.log("D: " + item.object_production_date_earliest);
-                    var dateYear = item.object_production_date_earliest.split("-")[0];
+                    var dateYear = parseInt(item.object_production_date_earliest.split("-")[0]);
                     var control_year_min = year - (years / 2);
                     var control_year_max = year + (years / 2);
                     console.log("CY " + dateYear + " cc " + control_year_max);
                     if ((dateYear > control_year_min ) && (dateYear < control_year_max)) {
                         item.object_production_date_earliest = dateYear;
+                        item.artist_name = item.artist_name[0];
+                        newToSendArr.push(item);
                     } else {
                         console.log("excluding " + item.object_production_date_earliest);
+                        console.log("excluding " + item.artist_name[0]);
                     }
 
-                    item.artist_name = item.artist_name[0];
-                })
+                });
 
-                newToSendArr.sort();
+                //newToSendArr.sort();
+                console.log("CC " + newToSendArr.length);
 
                 res.render('artworks', {
                     pixelunit: pixel,

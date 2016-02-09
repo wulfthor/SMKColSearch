@@ -37,6 +37,8 @@ router.post('/', function(req,res) {
                 console.log(JSON.stringify(info.response.docs[0]));
                 // now perform the wget
                 var newurl = info.response.docs[0].medium_image_url;
+                var prodyear = info.response.docs[0].object_production_date_earliest.split("-")[0];
+                var artistname = info.response.docs[0].artist_name[0];
                 var arg1 = config.HOME + '/public/uploads/colormappix.png';
                 var src = config.HOME + '/public/uploads/colormap.jpg';
                 //var arg1 = "/home/thw/git/colosearch/util/" + req.body.newname + ".jpg";
@@ -67,7 +69,7 @@ router.post('/', function(req,res) {
                             child.stdout.on('close',
                                 function (data) {
                                     console.log('done total ..');
-                                    res.redirect('/?id='+req.body.comment);
+                                    res.redirect('/?id='+req.body.comment+'&prodyear='+prodyear+'&artistname='+artistname);
                                 }
                             );
                         }
