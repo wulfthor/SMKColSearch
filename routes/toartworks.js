@@ -13,7 +13,9 @@ router.post('/', function(req,res) {
     color = color.toLowerCase();
     var hits = req.body.hits;
     var pixel = req.body.pix;
-    console.log("PARAM " + color + " n " + hits + " p " + pixel);
+    var years = parseInt(req.body.years);
+    var year = parseInt(req.body.year);
+    console.log("PARAM " + color + " n " + hits);
     async.waterfall([
             function getKMSfromCol(callback) {
                 var retVal = '';
@@ -42,8 +44,8 @@ router.post('/', function(req,res) {
             async.map(result,function(res,cb) {
                 console.log("into mm");
 
-                subquerystring = res.id + "&fl=id,medium_image_url,title_dk,artist_name,object_production_date_earliest&wt=json";
-                console.log(subquerystring);
+                subquerystring = res.id + "&fl=id,medium_image_url,title_dk,artist_name,object_production_date_earliest,object_production_date_text_dk&wt=json";
+                console.log("SUB: " + subquerystring);
 
                 request({
                     uri: 'http://' + config.SOLR_SEBHOST + '/solr/prod_all_dk/' + 'select?q=id:' + subquerystring,
@@ -91,9 +93,22 @@ router.post('/', function(req,res) {
                 });
 
                 newToSendArr = toSendArr.map(function(item) {
-                    console.log("chane")
+                    //"object_production_date_earliest":"1954-01-01T00:00:00Z"
+                    console.log("D: " + item.object_production_date_earliest);
+                    var dateYear = item.object_production_date_earliest.split("-")[0];
+                    var control_year_min = year - (years / 2);
+                    var control_year_max = year + (years / 2);
+                    console.log("CY " + dateYear + " cc " + control_year_max);
+                    if ((dateYear > control_year_min ) && (dateYear < control_year_max)) {
+                        item.object_production_date_earliest = dateYear;
+                    } else {
+                        console.log("excluding " + item.object_production_date_earliest);
+                    }
+
                     item.artist_name = item.artist_name[0];
                 })
+
+                newToSendArr.sort();
 
                 res.render('artworks', {
                     pixelunit: pixel,

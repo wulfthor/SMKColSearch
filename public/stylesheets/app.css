@@ -1,4 +1,4 @@
-﻿	@charset "UTF-8";
+	@charset "UTF-8";
 	/*
 	 Â§ Variables
 	\*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
@@ -683,9 +683,6 @@
 	  }
 	}
 	
-	/*
-	 Â§ Equalized matrix (equalized heights)
-	\*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 	.matrix-equalized .matrix-tile {
 	  padding-bottom: 10px;
 	  height: 391px;

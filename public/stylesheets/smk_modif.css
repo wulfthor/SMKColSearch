@@ -317,7 +317,7 @@ a.divLink {
   max-width: 100%;
   /* width: 100%; */
   width: auto;
-  max-height: 150px;
+  max-height: 190px;
 }
 
 .matrix-equalized .matrix-tile-image img {
@@ -383,7 +383,7 @@ a.divLink {
 }
 
 .matrix-equalized .matrix-tile {
-    height: 300px;  
+    height: 380px;
 }
 
 /*

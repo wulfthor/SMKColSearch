@@ -34,6 +34,29 @@ hml, body, div, canvas {
   padding: 0;
 }
 
+.pressItemHover{
+    opacity: 0;
+    transition: opacity 0.5s linear 0s;
+    visibility: hidden;
+}
 
+.pressListItem:hover .pressItemHover{
+    opacity: 1;
+    visibility: visible;
+}
+.pressListItem{
+    width: 60px;
+    float: left;
+    height: 20px;
+    margin-right:12px;
+    text-align: center;
+    border: solid 1px #e4e4e4;
+}
+
+a.thumbnailzz {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
 
 

@@ -4,12 +4,16 @@
     <title><%= titel %></title>
     <link rel='stylesheet' href='stylesheets/bootstrap.min.css' />
     <link rel='stylesheet' href='stylesheets/lightbox.css' />
+    <link rel='stylesheet' href='stylesheets/app.css' />
+    <link rel='stylesheet' href='stylesheets/print.css' />
+    <link rel='stylesheet' href='stylesheets/smk_modif.css' />
     <link rel='stylesheet' href='stylesheets/style.css' />
+
 
 </head>
 <body>
 <header>
-    <div class="jumbotron" style="background:#<%= bgcol %>;">
+    <div class="jumbotron" style="background:<%= bgcol %>;">
         <div class="container">
             <div class="row">
                 <div class="col-xs-12 col-sm-8">
@@ -26,44 +30,64 @@
     </div>
 </header>
 <div class="container">
-    <div id="newstuff" class="row">
-        <div class="gallery" id="gallery-container">
-           <form class="form-horizontal" role="form" action="/explore" method="post">
-               <input type="hidden" name="newname" value="colormap" />
-               <input type="hidden" name="pixunit" value="<%= pixelunit %>" />
-            <% for(var i=0; i<artworks.length; i++) {%>
-            <div class="col-lg-3 col-md-4 col-sm-6">
-                <div class="col-thumbnail">
-                    <figure class="figure">
-                    <a href="<%= artworks[i].medium_image_url %>" class="thumbnail" data-lightbox="gallery" data-title="<%= artworks[i].title_dk %>">
-                    <img src="<%= artworks[i].medium_image_url %>" alt="<%= artworks[i].title_dk  %>" title="<%= artworks[i].artist_name %>" >
-                    <figcaption class="figure-caption text-xs-right"> <%= artworks[i].artist_name + ' ' + artworks[i].id %></figcaption>
 
-                    </a>
+        <div id="smk_teasers">
 
-                        <div class="radio">
-                            <label><input type="radio" checked="checked" class="myradio" value="<%=artworks[i].id%>" name="comment" id="comment-<%=artworks[i].id + "-" + i%>" />Explore</label>
+                <div class="gallery" id="gallery-container">
+                    <form class="form-horizontal" role="form" action="/explore" method="post">
+                        <input type="hidden" name="newname" value="colormap" />
+                        <input type="hidden" name="pixunit" value="<%= pixelunit %>" />
+                        <% for(var i=0; i<artworks.length; i++) {%>
+                        <div class="matrix-tile">
+                            <div class="matrix-tile-inner">
+                                <div class="matrix-tile-image">
+                                    <figure class="figure">
+                                        <a href="<%= artworks[i].medium_image_url %>" class="thumbnail" data-lightbox="gallery" >
+                                            <img src="<%= artworks[i].medium_image_url + '?mode=width&width=198' %>" alt="<%= artworks[i].title_dk  %>"  >
+
+                                            <figcaption class="figure-caption text-xs-right"> </figcaption>
+
+                                        </a>
+                                        <div class="pressListItem">
+                                            <div class="pressItemHover">
+                                                <input type="radio"  checked="checked"  value="<%=artworks[i].id%>" name="comment" id="comment">
+                                            </div>
+                                        </div>
+
+                                    </figure>
+
+                                </div>
+                            </div>
+                            <div>
+                                <ul class="matrix-tile-meta">
+                                    <li class="matrix-tile-meta-id">Titel : <%= artworks[i].title_dk %></li>
+                                    <li class="matrix-tile-meta-id">Kunstner : <%= artworks[i].artist_name  %></li>
+                                    <li class="matrix-tile-meta-date">Datering: <%= artworks[i].object_production_date_text_dk%></li>
+                                    <li class="matrix-tile-meta-id">Inventar nr.: <%= artworks[i].id %></li>
+                                </ul>
+                            </div>
+
+
                         </div>
 
-                    </figure>
+                        <% } %>
+                        <div class="form-group">
+                            <div class="col-xs-5 col-sm-3 col-md-3 col-lg-3">
+                                <button type="submit" class="btn btn-primary">Explore</button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
 
-            <% } %>
-                <div class="form-group">
-                    <div class="col-xs-5 col-sm-3 col-md-3 col-lg-3">
-                        <button type="submit" class="btn btn-primary">Explore</button>
-                    </div>
-                </div>
-                </form>
-        </div>
-    </div>
+
 </div>
 
 <script type="text/javascript" src="javascripts/jquery-min.js"></script>
 <script type="text/javascript" src="javascripts/bootstrap.min.js"></script>
 <script type="text/javascript" src="javascripts/lightbox.js"></script>
 <script>
+
     //$('div .mycheckbox').prop( "checked", true );
     $('div .myradio').attr('checked', false);
 
@@ -83,9 +107,9 @@
             $(this).attr('checked', false);
         });
 
-      //  "#" + inputID + ".inputfield")
+        //  "#" + inputID + ".inputfield")
 
-    //$("input[name=q12_3]:checked").val());
+        //$("input[name=q12_3]:checked").val());
         $("#" + keeper).attr('checked', true);
         $("#" + keeper).prop('checked', true);
 

@@ -67,7 +67,7 @@ router.post('/', function(req,res) {
                             child.stdout.on('close',
                                 function (data) {
                                     console.log('done total ..');
-                                    res.redirect('/');
+                                    res.redirect('/?id='+req.body.comment);
                                 }
                             );
                         }
