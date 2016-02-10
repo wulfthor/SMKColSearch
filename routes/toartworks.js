@@ -15,11 +15,13 @@ router.post('/', function(req,res) {
     var pixel = req.body.pix;
     var years = parseInt(req.body.years);
     var year = parseInt(req.body.year);
-    console.log("PARAM " + color + " n " + hits);
+    var sortMethod = req.body.sort;
+    console.log("PARAM " + color + " n " + sortMethod);
     async.waterfall([
             function getKMSfromCol(callback) {
                 var retVal = '';
-                querystring = color + "&fl=id,termfreq('color_text'," + color + ")&wt=json&rows=" + hits;
+                var maxhits = 200;
+                querystring = color + "&fl=id,termfreq('color_text'," + color + ")&wt=json&rows=" + maxhits;
                 console.log("QS: " + querystring);
                 request({
                     uri: 'http://' + config.SOLR_HOST + ':' + config.SOLR_PORT + '/solr/colors/' + 'select?q=' + querystring,
@@ -92,8 +94,10 @@ router.post('/', function(req,res) {
 
                 });
                 var newToSendArr = new Array();
+                var counter = 0;
 
                 toSendArr.forEach(function(item) {
+
                     //"object_production_date_earliest":"1954-01-01T00:00:00Z"
                     console.log("D: " + item.object_production_date_earliest);
                     var dateYear = parseInt(item.object_production_date_earliest.split("-")[0]);
@@ -104,20 +108,48 @@ router.post('/', function(req,res) {
                         item.object_production_date_earliest = dateYear;
                         item.artist_name = item.artist_name[0];
                         newToSendArr.push(item);
+                        counter = counter + 1;
+                        console.log("including " + item.object_production_date_earliest + " " + item.artist_name[0]);
+
                     } else {
+                        console.log("excluding " + item.object_production_date_earliest);
                         console.log("excluding " + item.object_production_date_earliest);
                         console.log("excluding " + item.artist_name[0]);
                     }
 
                 });
 
-                //newToSendArr.sort();
+                if (sortMethod == "name") {
+
+                    newToSendArr.sort(function (a, b) {
+                        if (a.artist_name < b.artist_name) {
+                            return -1;
+                        }
+                        if (a.artist_name > b.artist_name) {
+                            return 1;
+                        }
+                        return 0;
+                    });
+                }
+                if (sortMethod == "year") {
+
+                    newToSendArr.sort(function (a, b) {
+                        if (a.object_production_date_earliest < b.object_production_date_earliest) {
+                            return -1;
+                        }
+                        if (a.object_production_date_earliest > b.object_production_date_earliest) {
+                            return 1;
+                        }
+                        return 0;
+                    });
+                }
+
                 console.log("CC " + newToSendArr.length);
 
                 res.render('artworks', {
                     pixelunit: pixel,
                     titel: 'Artworks',
-                    artworks: toSendArr,
+                    artworks: newToSendArr,
                     bgcol: color
 
                  });
