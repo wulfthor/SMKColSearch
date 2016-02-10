@@ -147,6 +147,7 @@ router.post('/', function(req,res) {
                 console.log("CC " + newToSendArr.length);
 
                 res.render('artworks', {
+                    general_title: 'Colorsearch ',
                     pixelunit: pixel,
                     titel: 'Artworks',
                     artworks: newToSendArr,

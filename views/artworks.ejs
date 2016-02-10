@@ -1,18 +1,35 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title><%= titel %></title>
+    <title><%= general_title %></title>
     <link rel='stylesheet' href='stylesheets/bootstrap.min.css' />
     <link rel='stylesheet' href='stylesheets/lightbox.css' />
     <link rel='stylesheet' href='stylesheets/app.css' />
-    <link rel='stylesheet' href='stylesheets/print.css' />
+
     <link rel='stylesheet' href='stylesheets/smk_modif.css' />
     <link rel='stylesheet' href='stylesheets/style.css' />
 
 
 </head>
 <body>
-<header>
+<header class="main-header">
+    <div class="main-header-topshelf">
+        <div class="back-to-site">
+            <a href="#"><i></i></a>
+        </div>
+        <h1 class="branding">
+            <a href="/">Statens Museum for Kunst</a>
+            <i><%= general_title %>&nbsp;</i><span>prototype</span>
+            <img class="print-logo" src="images/smk-logo-print.png">
+        </h1>
+        <div class="print">
+            <a href=""><i></i> Print</a>
+        </div>
+    </div>
+
+</header>
+
+<!--<header>
     <div class="jumbotron" style="background:<%= bgcol %>;">
         <div class="container">
             <div class="row">
@@ -28,8 +45,9 @@
             </div>
         </div>
     </div>
-</header>
+</header>-->
 <div class="container">
+    <section class="section-list" role="list">
 
         <div id="smk_teasers">
 
@@ -72,14 +90,14 @@
 
                         <% } %>
                         <div class="form-group">
-                            <div class="col-xs-5 col-sm-3 col-md-3 col-lg-3">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                 <button type="submit" class="btn btn-primary">Explore</button>
                             </div>
                         </div>
                     </form>
                 </div>
             </div>
-
+</section>
 
 </div>
 

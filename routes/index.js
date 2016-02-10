@@ -27,7 +27,7 @@ router.get('/', function(req, res) {
     }
 
     res.render('index', {
-            title: 'Search SMK by Colors',
+        general_title: 'Search SMK by Colors',
             source: sourceid,
             name: artistname,
             year: prodyear

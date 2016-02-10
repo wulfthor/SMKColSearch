@@ -29,6 +29,7 @@ build/Release
 tmp/*
 data/*
 public/data/*
+public/fonts/
 colsearch/*
 node_modules
 .DS_Store
@@ -41,8 +42,9 @@ bower_components/
 angular.xcodeproj
 .idea
 *.txt
-*.jpg
 util/newtry
+util/trash
+util/tmp
 *.iml
 .agignore
 .lvimrc

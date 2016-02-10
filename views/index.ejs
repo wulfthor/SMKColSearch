@@ -1,26 +1,29 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title><%= title %></title>
+    <title><%= general_title %></title>
     <link rel='stylesheet' href='stylesheets/bootstrap.min.css' />
     <link rel='stylesheet' href='stylesheets/lightbox.css' />
+    <link rel='stylesheet' href='stylesheets/app.css' />
     <link rel='stylesheet' href='stylesheets/smk_modif.css' />
     <link rel='stylesheet' href='stylesheets/style.css' />
 
 </head>
 <body>
 <header>
-    <div class="jumbotron">
-        <div class="container">
-            <div class="row">
-                <div class="col-xs-12 col-sm-12">
-                    <h1>SMK colorsearch</h1>
-                    <h2>Click on color in 256-colormap. The hex-value is submitted.
-                        Jumbotron-text on resultpage is return-link</h2>
-                </div>
+    <header class="main-header">
+        <div class="main-header-topshelf">
+            <div class="back-to-site">
+                <a href="#"><i></i></a>
             </div>
+            <h1 class="branding">
+                <a href="/">Statens Museum for Kunst</a>
+                <i><%= general_title %>&nbsp;</i><span>prototype</span>
+                <img class="print-logo" src="images/smk-logo-print.png">
+            </h1>
         </div>
-    </div>
+
+    </header>
 </header>
 <div class="container">
 
@@ -73,7 +76,7 @@
                     </div>
                     <div class="col-xs-12 col-sm-4">
                         <label for="year" class="control-label">Year</label>
-                        <input type="number" value="<%= prodyear %>" class="form-control" id="year" name="year" placeholder="year ">
+                        <input type="number" value="<%=  prodyear == 0 ? '1900' : prodyear %>" class="form-control" id="year" name="year" placeholder="year ">
                     </div>
                 </div>
                 <div class="form-group">
