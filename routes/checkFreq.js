@@ -16,9 +16,11 @@ router.get('/', function(req,res) {
     //var color = "e8e5e0";
     var color = req.query.color.toLowerCase();
     var lookupCol = color.replace("#","");
+    /*
     if ((color.length) == 6) {
         lookupCol = color.slice(0, -1);
     }
+    */
     //var hits = req.body.hits;
     var hits = req.query.hits;
     console.log("PARAM " + color + " n " + hits);

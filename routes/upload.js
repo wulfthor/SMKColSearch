@@ -33,8 +33,8 @@ router.post('/', upload.single('image'), function (req, res) {
     im.crop({
         srcPath: 'public/uploads/colormaptmp.jpg',
         dstPath: 'public/uploads/colormap.jpg',
-        width: 200,
-        height: 200,
+        width: 300,
+        height: 300,
         quality: 1,
         gravity: "North"
     }, function(err, stdout, stderr){
